@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 
 class PasswordEntry;
@@ -5,5 +7,5 @@ class PasswordEntry;
 class IListObserver
 {
 public:
-    virtual void notify(const std::vector<PasswordEntry *>&) = 0;
+    virtual void notify(const std::vector<PasswordEntry>&) = 0;
 };

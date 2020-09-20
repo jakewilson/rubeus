@@ -3,9 +3,17 @@
 
 #include <vector>
 
+Model::Model()
+{
+    // TODO test - remove
+    m_entries.push_back({"user1", "1234", "google.com"});
+    m_entries.push_back({"user2", "3456", "github.com"});
+}
+
 void Model::register_list_observer(IListObserver *observer)
 {
     m_list_observers.push_back(observer);
+    notify_list_observers(); // TODO remove
 }
 
 void Model::remove_list_observer(IListObserver *observer)

@@ -1,5 +1,9 @@
+/**
+
+ */
 #include "colors.h"
-#include "rubeus.h"
+#include "listview.h"
+#include "model.h"
 
 #include <iostream>
 #include <ncurses.h>
@@ -21,12 +25,13 @@ void kill()
 
 void run()
 {
-    int c{0};
-    Rubeus r{};
+    int c {0};
+    Model model {};
+    ListView list_view {&model};
 
     while (c != 'q')
     {
-        r.render();
+        list_view.render();
         c = getch();
     }
 }

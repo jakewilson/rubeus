@@ -10,3 +10,4 @@
 [] add CMake
 [] add command line args
 [] add license
+[] maybe the model/observers need templates to decouple them from PasswordEntry?

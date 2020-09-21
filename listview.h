@@ -10,7 +10,7 @@
 #define NUM_RUBEUS_COLS 4
 #define COL_OFFSET 3
 #define COL_SIZE (COLS - (2 * COL_OFFSET)) / NUM_RUBEUS_COLS
-#define COL_BUFFER 1
+#define COL_BUFFER 2
 
 #define RUBEUS_COL_START COL_OFFSET
 

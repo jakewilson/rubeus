@@ -91,7 +91,11 @@ void ListView::render_nth_column(
 
 const char * ListView::pad_entry_str(std::string str) const
 {
-    // TODO
+    if (str.length() > COL_SIZE)
+    {
+        str = str.substr(0, COL_SIZE - 3) + "...";
+    }
+
     return str.c_str();
 }
 

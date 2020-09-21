@@ -24,7 +24,7 @@ void ListView::update()
 }
 
 // debug fn
-void ListView::print_grid()
+void ListView::print_grid() const
 {
 /*
     for (auto line = 0; line < LINES; line++)
@@ -43,64 +43,59 @@ void ListView::print_grid()
 
 void ListView::render()
 {
-    print_grid();
+    //print_grid();
     print_header();
     render_list_header();
     render_list();
     wrefresh(m_window);
 }
 
-void ListView::render_list()
+void ListView::render_list() const
 {
     for (auto i = 0; i < m_entries.size(); i++)
     {
-        int col {0};
-        mvwprintw(
-            m_window,
+        render_nth_column(
+            USER_COL,
             LIST_START_LINE + i,
-            0,
-            "%s",
             pad_entry_str(m_entries[i].get_username())
         );
-
-        col += COL_BUFFER + COL_SIZE;
-        mvwprintw(
-            m_window,
+        render_nth_column(
+            PASS_COL,
             LIST_START_LINE + i,
-            col,
-            "%s",
             pad_entry_str(m_entries[i].get_password())
+        );
+        render_nth_column(
+            WEBSITE_COL,
+            LIST_START_LINE + i,
+            pad_entry_str(m_entries[i].get_website())
         );
     }
 }
 
-void ListView::render_list_header()
+void ListView::render_list_header() const
 {
-    // TODO should have functions for nth column
-    int col {0};
-    mvwprintw(
-        m_window,
-        LIST_HEADER_LINE,
-        0,
-        "Username"
-    );
-
-    col += COL_BUFFER + COL_SIZE;
-    mvwprintw(
-        m_window,
-        LIST_HEADER_LINE,
-        col,
-        "Password"
-    );
+    render_nth_column(USER_COL, LIST_HEADER_LINE, "Username");
+    render_nth_column(PASS_COL, LIST_HEADER_LINE, "Password");
+    render_nth_column(WEBSITE_COL, LIST_HEADER_LINE, "Website");
 }
 
-const char * ListView::pad_entry_str(std::string str)
+void ListView::render_nth_column(
+    int col_number,
+    int line_number,
+    const char * str
+) const
+{
+    const int col = RUBEUS_COL_START + ((COL_BUFFER + COL_SIZE) * col_number);
+    mvwprintw(m_window, line_number, col, str);
+}
+
+const char * ListView::pad_entry_str(std::string str) const
 {
     // TODO
     return str.c_str();
 }
 
-void ListView::print_header()
+void ListView::print_header() const
 {
     const int starting_line {2};
     const int starting_col {(COLS / 2) - 3};

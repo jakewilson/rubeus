@@ -17,6 +17,10 @@
 #define LIST_HEADER_LINE 4
 #define LIST_START_LINE  5
 
+#define USER_COL    0
+#define PASS_COL    1
+#define WEBSITE_COL 2
+
 class ListView : public IListObserver
 {
 public:
@@ -25,10 +29,11 @@ public:
 
     void update();
     void render();
-    void render_list();
-    void render_list_header();
-    const char * pad_entry_str(std::string);
-    void print_grid();
+    void render_list() const;
+    void render_list_header() const;
+    void render_nth_column(int, int, const char *) const;
+    const char * pad_entry_str(std::string) const;
+    void print_grid() const;
 
     virtual void notify(const std::vector<PasswordEntry>&) override;
 private:
@@ -37,5 +42,5 @@ private:
 
     std::vector<PasswordEntry> m_entries {};
 
-    void print_header();
+    void print_header() const;
 };

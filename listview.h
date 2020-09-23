@@ -32,6 +32,8 @@ public:
     void render_list() const;
     void render_list_header() const;
     void render_nth_column(int, int, const char *) const;
+    void render_selected_entry() const;
+    void render_n_spaces(int) const;
     const char * pad_entry_str(std::string) const;
     void print_grid() const;
 
@@ -41,6 +43,7 @@ private:
     IModel *m_model;
 
     std::vector<PasswordEntry> m_entries {};
+    int m_selected_entry {0};
 
     void print_header() const;
 };

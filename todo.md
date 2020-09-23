@@ -15,4 +15,4 @@
 [ ] add string padding functions that show ellipses (like jakewilsonfl@...)
 [ ] add view entry class
 [ ] add edit entry class
-
+[ ] render footer which shows commands

@@ -54,6 +54,12 @@ void ListView::render_list() const
 {
     for (auto i = 0; i < m_entries.size(); i++)
     {
+        if (i == m_selected_entry)
+        {
+            render_selected_entry();
+            continue;
+        }
+
         render_nth_column(
             USER_COL,
             LIST_START_LINE + i,
@@ -87,6 +93,41 @@ void ListView::render_nth_column(
 {
     const int col = RUBEUS_COL_START + ((COL_BUFFER + COL_SIZE) * col_number);
     mvwprintw(m_window, line_number, col, str);
+}
+
+void ListView::render_selected_entry() const
+{
+    wattron(m_window, COLOR_PAIR(RUBEUS_BLACK_WHITE));
+    const auto& username = pad_entry_str(m_entries[m_selected_entry].get_username());
+    const auto& password = pad_entry_str(m_entries[m_selected_entry].get_password());
+    const auto& website =  pad_entry_str(m_entries[m_selected_entry].get_website());
+
+    render_nth_column(
+        USER_COL,
+        LIST_START_LINE + m_selected_entry,
+        username
+    );
+    render_n_spaces(COL_SIZE - strlen(username) + COL_BUFFER);
+    render_nth_column(
+        PASS_COL,
+        LIST_START_LINE + m_selected_entry,
+        password
+    );
+    render_n_spaces(COL_SIZE - strlen(password) + COL_BUFFER);
+    render_nth_column(
+        WEBSITE_COL,
+        LIST_START_LINE + m_selected_entry,
+        website
+    );
+    wattroff(m_window, COLOR_PAIR(RUBEUS_BLACK_WHITE));
+}
+
+void ListView::render_n_spaces(int n) const
+{
+    for (int i = 0; i < n; i++)
+    {
+        wprintw(m_window, " ");
+    }
 }
 
 const char * ListView::pad_entry_str(std::string str) const

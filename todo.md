@@ -16,3 +16,4 @@
 [ ] add view entry class
 [ ] add edit entry class
 [ ] render footer which shows commands
+[ ] add listviewcontroller

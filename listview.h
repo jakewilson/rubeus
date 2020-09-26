@@ -1,8 +1,9 @@
 #pragma once
 
+#include "IController.h"
 #include "IListObserver.h"
 #include "IModel.h"
-#include "passwordentry.h"
+#include "PasswordEntry.h"
 
 #include <ncurses.h>
 #include <vector>
@@ -41,6 +42,7 @@ public:
 private:
     WINDOW *m_window;
     IModel *m_model;
+    IController *m_controller;
 
     std::vector<PasswordEntry> m_entries {};
     int m_selected_entry {0};

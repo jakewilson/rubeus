@@ -1,4 +1,4 @@
-#include "passwordentry.h"
+#include "PasswordEntry.h"
 
 PasswordEntry::PasswordEntry
 (

@@ -2,8 +2,8 @@
 
  */
 #include "colors.h"
-#include "listview.h"
-#include "model.h"
+#include "ListView.h"
+#include "Model.h"
 
 #include <iostream>
 #include <ncurses.h>

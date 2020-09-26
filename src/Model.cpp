@@ -1,5 +1,5 @@
-#include "IListObserver.h"
-#include "Model.h"
+#include "IListObserver.hpp"
+#include "Model.hpp"
 
 #include <vector>
 

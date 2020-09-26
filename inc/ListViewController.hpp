@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IController.h"
-#include "IModel.h"
+#include "IController.hpp"
+#include "IModel.hpp"
 
 class ListViewController : public IController
 {

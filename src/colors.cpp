@@ -1,4 +1,4 @@
-#include "colors.h"
+#include "colors.hpp"
 
 void init_colors()
 {

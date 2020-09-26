@@ -1,9 +1,9 @@
 #pragma once
 
-#include "IController.h"
-#include "IListObserver.h"
-#include "IModel.h"
-#include "PasswordEntry.h"
+#include "IController.hpp"
+#include "IListObserver.hpp"
+#include "IModel.hpp"
+#include "PasswordEntry.hpp"
 
 #include <ncurses.h>
 #include <vector>

@@ -1,9 +1,9 @@
 /**
 
  */
-#include "colors.h"
-#include "ListView.h"
-#include "Model.h"
+#include "colors.hpp"
+#include "ListView.hpp"
+#include "Model.hpp"
 
 #include <iostream>
 #include <ncurses.h>

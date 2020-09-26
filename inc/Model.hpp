@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IModel.h"
-#include "PasswordEntry.h"
+#include "IModel.hpp"
+#include "PasswordEntry.hpp"
 
 class Model : public IModel
 {

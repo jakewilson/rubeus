@@ -3,16 +3,16 @@ cmake_minimum_required(VERSION 3.10)
 project(rubeus)
 
 set(RUBEUS_SOURCE_FILES
-    inc/IController.h
-    inc/IListObserver.h
-    inc/IModel.h
-    inc/ListView.h src/ListView.cpp
-    inc/ListViewController.h
-    inc/Logger.h src/Logger.cpp
-    inc/Model.h src/Model.cpp
-    inc/PasswordEntry.h src/PasswordEntry.cpp
+    inc/IController.hpp
+    inc/IListObserver.hpp
+    inc/IModel.hpp
+    inc/ListView.hpp src/ListView.cpp
+    inc/ListViewController.hpp
+    inc/Logger.hpp src/Logger.cpp
+    inc/Model.hpp src/Model.cpp
+    inc/PasswordEntry.hpp src/PasswordEntry.cpp
 
-    inc/colors.h src/colors.cpp
+    inc/colors.hpp src/colors.cpp
 
     src/main.cpp
 )

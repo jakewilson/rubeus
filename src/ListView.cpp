@@ -1,5 +1,5 @@
-#include "colors.h"
-#include "ListView.h"
+#include "colors.hpp"
+#include "ListView.hpp"
 
 #include <iostream>
 

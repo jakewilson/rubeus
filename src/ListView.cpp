@@ -157,14 +157,24 @@ void ListView::notify(const std::vector<PasswordEntry>& entries)
 
 void ListView::selected_entry_up()
 {
-    m_selected_entry = (m_selected_entry + 1) % m_entries.size();
-}
-
-void ListView::selected_entry_down()
-{
+    /*
+        "up" on the screen is "down" in the list,
+        item 0 is at the top and the list flows downwards
+        so moving "up" on the screen decrements the list index
+    */
     m_selected_entry--;
     if (m_selected_entry < 0)
     {
         m_selected_entry = m_entries.size() - 1;
     }
+}
+
+void ListView::selected_entry_down()
+{
+    /*
+        "down" on the screen is "up" in the list,
+        item 0 is at the top and the list flows downwards
+        so moving "down" on the screen increments the list index
+    */
+    m_selected_entry = (m_selected_entry + 1) % m_entries.size();
 }

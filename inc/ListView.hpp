@@ -38,6 +38,9 @@ public:
     const char * pad_entry_str(std::string) const;
     void print_grid() const;
 
+    void selected_entry_up();
+    void selected_entry_down();
+
     virtual void notify(const std::vector<PasswordEntry>&) override;
 
 private:

@@ -44,13 +44,36 @@ void Rubeus::run()
 
 void Rubeus::process_input(const int c)
 {
+    switch (m_view_state)
+    {
+        case ViewState::LIST_VIEW:
+            process_list_view_input(c);
+            break;
+
+        case ViewState::CREATE_VIEW:
+            // TODO
+            break;
+    }
+}
+
+void Rubeus::process_list_view_input(const int c)
+{
     // TODO
+    auto list_view = dynamic_cast<ListView *>(m_current_view);
     switch (c)
     {
         case 'q': case 'Q':
             // TODO may want to generate an 'action' that
             // does this instead - or may be overkill
             m_keep_running = false;
+            break;
+
+        case 'j': case 'J':
+            list_view->selected_entry_down();
+            break;
+
+        case 'k': case 'K':
+            list_view->selected_entry_up();
             break;
     }
 }

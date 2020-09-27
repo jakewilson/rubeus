@@ -17,3 +17,5 @@
 [ ] add edit entry class
 [ ] render footer which shows commands
 [ ] add listviewcontroller
+[ ] fix spaces still being highlighted when switching lines
+[ ] add arrow key support as well as j/k

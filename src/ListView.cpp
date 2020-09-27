@@ -153,3 +153,17 @@ void ListView::notify(const std::vector<PasswordEntry>& entries)
 {
     m_entries = entries;
 }
+
+void ListView::selected_entry_up()
+{
+    m_selected_entry = (m_selected_entry + 1) % m_entries.size();
+}
+
+void ListView::selected_entry_down()
+{
+    m_selected_entry--;
+    if (m_selected_entry < 0)
+    {
+        m_selected_entry = m_entries.size() - 1;
+    }
+}

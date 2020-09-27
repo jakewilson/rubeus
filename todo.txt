@@ -1,10 +1,10 @@
-[ ] add db
+[x] add db
 [ ] print header with cool rubeus ascii text
 [ ] add line/row numbers in yellow (like vim)
 [ ] display rows in db
 [x] render rows from model in listview
 [ ] selected row should be inverse fg/bg colors or something more subtle
-[ ] add create row view for creating a new entry
+[x] add create row view for creating a new entry
 [ ] add encryption with a private key or password
 [ ] add sorting for columns
 [ ] add CMake
@@ -19,3 +19,7 @@
 [x] fix spaces still being highlighted when switching lines
 [x] add arrow key support as well as j/k
 [ ] what happened to the border??
+[ ] create password_entry table on engine init if it doesn't exist
+[ ] make password_entry.id AUTO INC
+[ ] make select_password_entries_cb a lambda?
+[ ] arrow keys go the wrong way

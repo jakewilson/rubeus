@@ -4,18 +4,15 @@
 
 #include <vector>
 
-Model::Model()
+Model::Model() : m_engine(Engine())
 {
-    m_engine = Engine();
-    // TODO test - remove
-    m_entries.push_back({"thisismyreallyreallylongusernamethatisreallylong", "1234", "google.com"});
-    m_entries.push_back({"user2", "3456", "github.com"});
+    m_engine.select_password_entries(&m_entries);
 }
 
 void Model::register_list_observer(IListObserver *observer)
 {
     m_list_observers.push_back(observer);
-    notify_list_observers(); // TODO remove
+    observer->notify(m_entries); // TODO do I need this?
 }
 
 void Model::remove_list_observer(IListObserver *observer)

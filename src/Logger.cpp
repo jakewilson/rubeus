@@ -15,6 +15,9 @@ Logger::~Logger()
 
 void Logger::log(const char* str)
 {
+    if (str == NULL)
+        return;
+
     time_t now = time(0);
     std::string timestamp {ctime(&now)};
     auto newline_pos = timestamp.find_last_of("\n");

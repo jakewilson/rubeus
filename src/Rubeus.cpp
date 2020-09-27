@@ -68,11 +68,11 @@ void Rubeus::process_list_view_input(const int c)
             m_keep_running = false;
             break;
 
-        case 'j': case 'J':
+        case 'j': case 'J': case KEY_DOWN:
             list_view->selected_entry_down();
             break;
 
-        case 'k': case 'K':
+        case 'k': case 'K': case KEY_UP:
             list_view->selected_entry_up();
             break;
     }

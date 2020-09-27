@@ -18,4 +18,4 @@
 [ ] render footer which shows commands
 [ ] add listviewcontroller
 [x] fix spaces still being highlighted when switching lines
-[ ] add arrow key support as well as j/k
+[x] add arrow key support as well as j/k

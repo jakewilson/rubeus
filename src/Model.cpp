@@ -1,4 +1,5 @@
 #include "IListObserver.hpp"
+#include "Logger.hpp"
 #include "Model.hpp"
 
 #include <vector>

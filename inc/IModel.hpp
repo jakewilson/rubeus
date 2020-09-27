@@ -2,6 +2,8 @@
 
 #include <vector>
 
+class IListObserver;
+
 class IModel
 {
 public:

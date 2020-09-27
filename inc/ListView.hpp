@@ -1,9 +1,7 @@
 #pragma once
 
 #include "IListObserver.hpp"
-#include "IModel.hpp"
 #include "IView.hpp"
-#include "PasswordEntry.hpp"
 
 #include <ncurses.h>
 #include <vector>
@@ -22,13 +20,15 @@
 #define PASS_COL    1
 #define WEBSITE_COL 2
 
+class IModel;
+class PasswordEntry;
+
 class ListView : public IListObserver, public IView
 {
 public:
     ListView(IModel *model);
     ~ListView();
 
-    void update();
     void render() override;
     void render_list() const;
     void render_list_header() const;

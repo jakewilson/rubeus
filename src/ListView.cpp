@@ -1,5 +1,7 @@
 #include "colors.hpp"
+#include "IModel.hpp"
 #include "ListView.hpp"
+#include "PasswordEntry.hpp"
 
 #include <iostream>
 
@@ -16,11 +18,6 @@ ListView::~ListView()
     m_model->remove_list_observer(this);
 
     delwin(m_window);
-}
-
-void ListView::update()
-{
-    // TODO
 }
 
 // debug fn

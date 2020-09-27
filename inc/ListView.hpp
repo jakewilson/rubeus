@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IController.hpp"
 #include "IListObserver.hpp"
 #include "IModel.hpp"
+#include "IView.hpp"
 #include "PasswordEntry.hpp"
 
 #include <ncurses.h>
@@ -22,14 +22,14 @@
 #define PASS_COL    1
 #define WEBSITE_COL 2
 
-class ListView : public IListObserver
+class ListView : public IListObserver, public IView
 {
 public:
     ListView(IModel *model);
     ~ListView();
 
     void update();
-    void render();
+    void render() override;
     void render_list() const;
     void render_list_header() const;
     void render_nth_column(int, int, const char *) const;
@@ -39,10 +39,10 @@ public:
     void print_grid() const;
 
     virtual void notify(const std::vector<PasswordEntry>&) override;
+
 private:
     WINDOW *m_window;
     IModel *m_model;
-    IController *m_controller;
 
     std::vector<PasswordEntry> m_entries {};
     int m_selected_entry {0};

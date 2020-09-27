@@ -16,6 +16,7 @@ public:
     ~Rubeus();
 
     void run();
+
 private:
     IModel *m_model;
     IView *m_current_view;

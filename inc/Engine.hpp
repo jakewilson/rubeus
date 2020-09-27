@@ -12,6 +12,7 @@ public:
     Engine();
     ~Engine();
 
+    void init();
     void select_password_entries(std::vector<PasswordEntry> *);
 
 private:

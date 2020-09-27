@@ -18,7 +18,7 @@
 [ ] render footer which shows commands
 [x] fix spaces still being highlighted when switching lines
 [x] add arrow key support as well as j/k
-[ ] what happened to the border??
+[ ] what happened to the (ListView) border??
 [x] create password_entry table on engine init if it doesn't exist
 [x] make password_entry.id AUTO INC
 [ ] make select_password_entries_cb a lambda?
@@ -27,3 +27,5 @@
 [ ] put db init commands into a file and read it at the beginning (for creating the table, etc...)
 [ ] allow logger to accept multiple string args (e.g. logger << "cool" << "hi")
 [ ] add command for going forward/backwards by a 'page' which will be a runtime-val depending on LINES
+[ ] add readme
+[ ] move m_window and get_input to IView

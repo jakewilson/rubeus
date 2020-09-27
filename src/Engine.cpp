@@ -9,6 +9,11 @@
 
 Engine::Engine()
 {
+    init();
+}
+
+void Engine::init()
+{
     auto rc = sqlite3_open(m_db_name, &m_db);
 
     if (rc)

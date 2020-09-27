@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(rubeus)
 
 set(RUBEUS_SOURCE_FILES
+    inc/CreateView.hpp src/CreateView.cpp
     inc/Engine.hpp src/Engine.cpp
     inc/IListObserver.hpp
     inc/IModel.hpp

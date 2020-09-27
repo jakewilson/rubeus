@@ -1,4 +1,5 @@
 #include "colors.hpp"
+#include "CreateView.hpp"
 #include "ListView.hpp"
 #include "Logger.hpp"
 #include "Model.hpp"
@@ -38,7 +39,7 @@ void Rubeus::run()
     while (m_keep_running)
     {
         m_current_view->render();
-        process_input(getch());
+        process_input(m_current_view->get_input());
     }
 }
 
@@ -51,7 +52,7 @@ void Rubeus::process_input(const int c)
             break;
 
         case ViewState::CREATE_VIEW:
-            // TODO
+            process_create_view_input(c);
             break;
     }
 }
@@ -75,5 +76,36 @@ void Rubeus::process_list_view_input(const int c)
         case 'k': case 'K': case KEY_UP:
             list_view->selected_entry_up();
             break;
+
+        case 'c': case 'C':
+            toggle_create_view();
+            break;
     }
+}
+
+void Rubeus::process_create_view_input(const int c)
+{
+    auto create_view = dynamic_cast<CreateView *>(m_current_view);
+    switch (c)
+    {
+        case 27: // ESCAPE KEY
+            toggle_list_view();
+            break;
+    }
+}
+
+void Rubeus::toggle_list_view()
+{
+    delete m_current_view;
+
+    m_current_view = new ListView(m_model);
+    m_view_state = ViewState::LIST_VIEW;
+}
+
+void Rubeus::toggle_create_view()
+{
+    delete m_current_view;
+
+    m_current_view = new CreateView;
+    m_view_state = ViewState::CREATE_VIEW;
 }

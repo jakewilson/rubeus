@@ -30,6 +30,7 @@ public:
     ~ListView();
 
     void render() override;
+    const int get_input() override;
     void render_list() const;
     void render_list_header() const;
     void render_nth_column(int, int, const char *) const;

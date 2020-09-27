@@ -178,3 +178,9 @@ void ListView::selected_entry_down()
     */
     m_selected_entry = (m_selected_entry + 1) % m_entries.size();
 }
+
+const int ListView::get_input()
+{
+    // TODO move this into IView
+    return wgetch(m_window);
+}

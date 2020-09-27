@@ -27,4 +27,8 @@ private:
     void init();
     void process_input(const int c);
     void process_list_view_input(const int c);
+    void process_create_view_input(const int c);
+
+    void toggle_list_view();
+    void toggle_create_view();
 };

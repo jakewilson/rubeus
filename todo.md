@@ -1,8 +1,8 @@
 [ ] add db
-[ ] print header
+[ ] print header with cool rubeus ascii text
 [ ] add line/row numbers in yellow (like vim)
 [ ] display rows in db
-[ ] render rows from model in listview
+[x] render rows from model in listview
 [ ] selected row should be inverse fg/bg colors or something more subtle
 [ ] add create row view for creating a new entry
 [ ] add encryption with a private key or password
@@ -12,10 +12,10 @@
 [ ] add license
 [ ] maybe the model/observers need templates to decouple them from PasswordEntry?
 [x] add password entry class
-[ ] add string padding functions that show ellipses (like jakewilsonfl@...)
+[x] add string padding functions that show ellipses (like jakewilsonfl@...)
 [ ] add view entry class
 [ ] add edit entry class
 [ ] render footer which shows commands
-[ ] add listviewcontroller
 [x] fix spaces still being highlighted when switching lines
 [x] add arrow key support as well as j/k
+[ ] what happened to the border??

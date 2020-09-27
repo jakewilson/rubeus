@@ -6,6 +6,7 @@
 
 Model::Model()
 {
+    m_engine = Engine();
     // TODO test - remove
     m_entries.push_back({"thisismyreallyreallylongusernamethatisreallylong", "1234", "google.com"});
     m_entries.push_back({"user2", "3456", "github.com"});

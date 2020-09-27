@@ -7,10 +7,10 @@ ListView::ListView(IModel *model) : m_model(model)
 {
     m_model->register_list_observer(this);
 
-    curs_set(0); // make the cursor invisible
-
     m_window = newwin(LINES, COLS, 0, 0);
     box(m_window, 0, 0);
+
+    curs_set(0); // make the cursor invisible
 }
 
 ListView::~ListView()

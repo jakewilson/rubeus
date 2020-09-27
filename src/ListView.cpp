@@ -3,11 +3,11 @@
 #include "ListView.hpp"
 #include "PasswordEntry.hpp"
 
-#include <iostream>
-
 ListView::ListView(IModel *model) : m_model(model)
 {
     m_model->register_list_observer(this);
+
+    curs_set(0); // make the cursor invisible
 
     m_window = newwin(LINES, COLS, 0, 0);
     box(m_window, 0, 0);
@@ -40,6 +40,7 @@ void ListView::print_grid() const
 
 void ListView::render()
 {
+    wclear(m_window);
     //print_grid();
     print_header();
     render_list_header();

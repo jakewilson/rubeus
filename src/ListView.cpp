@@ -3,10 +3,8 @@
 #include "ListView.hpp"
 #include "PasswordEntry.hpp"
 
-ListView::ListView(IModel *model) : m_model(model)
+ListView::ListView(const std::vector<PasswordEntry>& entries) : m_entries(entries)
 {
-    m_model->register_list_observer(this);
-
     m_window = newwin(LINES, COLS, 0, 0);
     box(m_window, 0, 0);
 
@@ -15,8 +13,6 @@ ListView::ListView(IModel *model) : m_model(model)
 
 ListView::~ListView()
 {
-    m_model->remove_list_observer(this);
-
     delwin(m_window);
 }
 
@@ -148,11 +144,6 @@ void ListView::print_header() const
     mvwprintw(m_window, starting_line, starting_col, "rubeus");
 
     wattroff(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
-}
-
-void ListView::notify(const std::vector<PasswordEntry>& entries)
-{
-    m_entries = entries;
 }
 
 void ListView::selected_entry_up()

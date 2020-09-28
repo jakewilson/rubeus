@@ -12,7 +12,9 @@ Rubeus::Rubeus()
     init();
 
     m_model = new Model;
-    m_current_view = new ListView(m_model);
+    m_model->register_list_observer(this);
+
+    m_current_view = new ListView(*m_entries);
     m_keep_running = true;
 }
 
@@ -127,7 +129,7 @@ void Rubeus::toggle_list_view()
     // TODO we may want to dump the window instead of delete it
     delete m_current_view;
 
-    m_current_view = new ListView(m_model);
+    m_current_view = new ListView(*m_entries);
     m_view_state = ViewState::list;
 }
 
@@ -138,4 +140,9 @@ void Rubeus::toggle_create_view()
 
     m_current_view = new CreateView;
     m_view_state = ViewState::create;
+}
+
+void Rubeus::notify(std::vector<PasswordEntry> const * entries)
+{
+    m_entries = entries;
 }

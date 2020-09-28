@@ -12,7 +12,7 @@ Model::Model() : m_engine(Engine())
 void Model::register_list_observer(IListObserver *observer)
 {
     m_list_observers.push_back(observer);
-    observer->notify(m_entries); // TODO do I need this?
+    observer->notify(&m_entries); // TODO do I need this?
 }
 
 void Model::remove_list_observer(IListObserver *observer)
@@ -33,6 +33,6 @@ void Model::notify_list_observers() const
 {
     for (const auto& observer : m_list_observers)
     {
-        observer->notify(m_entries);
+        observer->notify(&m_entries);
     }
 }

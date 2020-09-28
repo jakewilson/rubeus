@@ -20,13 +20,12 @@
 #define PASS_COL    1
 #define WEBSITE_COL 2
 
-class IModel;
 class PasswordEntry;
 
-class ListView : public IListObserver, public IView
+class ListView : public IView
 {
 public:
-    ListView(IModel *model);
+    ListView(const std::vector<PasswordEntry>& entries);
     ~ListView();
 
     void render() override;
@@ -42,13 +41,10 @@ public:
     void selected_entry_up();
     void selected_entry_down();
 
-    virtual void notify(const std::vector<PasswordEntry>&) override;
-
 private:
     WINDOW *m_window;
-    IModel *m_model;
 
-    std::vector<PasswordEntry> m_entries {};
+    const std::vector<PasswordEntry>& m_entries;
     int m_selected_entry {0};
 
     void print_header() const;

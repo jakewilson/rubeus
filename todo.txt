@@ -29,3 +29,9 @@
 [ ] add command for going forward/backwards by a 'page' which will be a runtime-val depending on LINES
 [ ] add readme
 [ ] move m_window and get_input to IView
+[ ] have two additional windows - header and footer so each screen doesn't have to render them
+[x] implement backspace
+[x] handle character presses on create view
+[ ] arrow keys seem to register as escape ??
+[ ] remove model from ListView and have Rubeus pass in needed data instead
+[ ] rename 'website' to 'title' for password_entry

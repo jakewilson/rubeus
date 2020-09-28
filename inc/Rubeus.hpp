@@ -3,17 +3,20 @@
 class IModel;
 class IView;
 
-enum ViewState
-{
-    LIST_VIEW,
-    CREATE_VIEW
-};
+constexpr int escape_key    = 27;
+constexpr int backspace_key = 127;
 
 class Rubeus
 {
 public:
     Rubeus();
     ~Rubeus();
+
+    enum class ViewState
+    {
+        list,
+        create
+    };
 
     void run();
 
@@ -22,7 +25,7 @@ private:
     IView *m_current_view;
 
     bool m_keep_running {true};
-    ViewState m_view_state {ViewState::LIST_VIEW};
+    ViewState m_view_state {ViewState::list};
 
     void init();
     void process_input(const int c);

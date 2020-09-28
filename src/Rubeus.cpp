@@ -47,11 +47,11 @@ void Rubeus::process_input(const int c)
 {
     switch (m_view_state)
     {
-        case ViewState::LIST_VIEW:
+        case ViewState::list:
             process_list_view_input(c);
             break;
 
-        case ViewState::CREATE_VIEW:
+        case ViewState::create:
             process_create_view_input(c);
             break;
     }
@@ -59,11 +59,10 @@ void Rubeus::process_input(const int c)
 
 void Rubeus::process_list_view_input(const int c)
 {
-    // TODO
     auto list_view = dynamic_cast<ListView *>(m_current_view);
     switch (c)
     {
-        case 'q': case 'Q':
+        case 'q': case 'Q': case escape_key:
             // TODO may want to generate an 'action' that
             // does this instead - or may be overkill
             m_keep_running = false;
@@ -88,24 +87,55 @@ void Rubeus::process_create_view_input(const int c)
     auto create_view = dynamic_cast<CreateView *>(m_current_view);
     switch (c)
     {
-        case 27: // ESCAPE KEY
+        case escape_key:
+        {
             toggle_list_view();
             break;
+        }
+        case backspace_key: case KEY_BACKSPACE: case '\b':
+        {
+            create_view->remove_char();
+            break;
+        }
+        case KEY_ENTER: case '\n': case '\r':
+        {
+            auto focus = create_view->get_focus();
+            if (focus == Focus::password)
+            {
+                // TODO save password here
+                toggle_list_view();
+            }
+            else
+            {
+                create_view->next_focus();
+            }
+            break;
+        }
+        default:
+        {
+            if (c >= 32 && c <= 126)
+            {
+                create_view->add_char(static_cast<char>(c));
+            }
+            break;
+        }
     }
 }
 
 void Rubeus::toggle_list_view()
 {
+    // TODO we may want to dump the window instead of delete it
     delete m_current_view;
 
     m_current_view = new ListView(m_model);
-    m_view_state = ViewState::LIST_VIEW;
+    m_view_state = ViewState::list;
 }
 
 void Rubeus::toggle_create_view()
 {
+    // TODO we may want to dump the window instead of delete it
     delete m_current_view;
 
     m_current_view = new CreateView;
-    m_view_state = ViewState::CREATE_VIEW;
+    m_view_state = ViewState::create;
 }

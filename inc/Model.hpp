@@ -12,6 +12,8 @@ public:
     void register_list_observer(IListObserver *) override;
     void remove_list_observer(IListObserver *) override;
 
+    void add_password_entry(const char *, const char *, const char *) override;
+
 protected:
     void notify_list_observers() const override;
 

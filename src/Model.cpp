@@ -36,3 +36,21 @@ void Model::notify_list_observers() const
         observer->notify(&m_entries);
     }
 }
+
+void Model::add_password_entry(
+    const char *username,
+    const char *password,
+    const char *title
+)
+{
+    const bool success = m_engine.add_password_entry(username, password, title);
+
+    if (success)
+    {
+        // update the list of entries
+        // TODO this is inefficient - we don't need to re-select
+        // the entire list when adding a single item
+        m_engine.select_password_entries(&m_entries);
+        notify_list_observers();
+    }
+}

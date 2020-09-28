@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Logger.hpp"
+
 #include <string>
 
 class PasswordEntry
@@ -11,7 +13,11 @@ public:
         std::string password,
         std::string title
     );
-    ~PasswordEntry() {}
+    ~PasswordEntry()
+    {
+        std::string str {"destroying password " + m_title};
+        logger << str;
+    }
 
     std::string get_username() const { return m_username; }
     std::string get_password() const { return m_password; }

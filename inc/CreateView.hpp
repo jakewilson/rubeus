@@ -48,6 +48,10 @@ public:
     void next_focus();
     void prev_focus();
 
+    const std::string get_title() { return m_title; }
+    const std::string get_username() { return m_username; }
+    const std::string get_password() { return m_password; }
+
 private:
     WINDOW *m_window;
 

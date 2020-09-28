@@ -13,7 +13,9 @@ public:
     ~Engine();
 
     void init();
+
     void select_password_entries(std::vector<PasswordEntry> *);
+    bool add_password_entry(const char *, const char *, const char *);
 
 private:
     sqlite3 *m_db;

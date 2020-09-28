@@ -11,6 +11,9 @@ public:
     virtual ~IModel() {}
     virtual void register_list_observer(IListObserver *) = 0;
     virtual void remove_list_observer(IListObserver *) = 0;
+
+    virtual void add_password_entry(const char *, const char *, const char *) = 0;
+
 protected:
     virtual void notify_list_observers() const = 0;
     std::vector<IListObserver *> m_list_observers {};

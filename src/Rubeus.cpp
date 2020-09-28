@@ -101,10 +101,13 @@ void Rubeus::process_create_view_input(const int c)
         }
         case KEY_ENTER: case '\n': case '\r':
         {
-            auto focus = create_view->get_focus();
-            if (focus == Focus::password)
+            if (create_view->get_focus() == Focus::password)
             {
-                // TODO save password here
+                m_model->add_password_entry(
+                    create_view->get_username().c_str(),
+                    create_view->get_password().c_str(),
+                    create_view->get_title().c_str()
+                );
                 toggle_list_view();
             }
             else

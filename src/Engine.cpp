@@ -54,6 +54,8 @@ Engine::~Engine()
 
 void Engine::select_password_entries(std::vector<PasswordEntry> *entries)
 {
+    entries->clear();
+
     char *errmsg;
     auto rc = sqlite3_exec(
         m_db,
@@ -126,4 +128,93 @@ void Engine::print_errmsg(int rc, const char *rubeus_msg, const char *sqlite_err
         logger << rubeus_msg;
         logger << ss.str();
         logger << sqlite_errmsg;
+}
+
+bool Engine::add_password_entry(
+    const char *username,
+    const char *password,
+    const char *title
+)
+{
+    std::stringstream query {};
+    query << "INSERT INTO password_entry (username, password, title) VALUES ";
+    query << "(?, ?, ?);";
+
+    sqlite3_stmt *stmt;
+    auto rc = sqlite3_prepare_v2(
+        m_db,
+        query.str().c_str(),
+        -1,
+        &stmt,
+        nullptr
+    );
+
+    if (rc)
+    {
+        print_errmsg(rc, "error preparing INSERT stmt", nullptr);
+
+        sqlite3_finalize(stmt);
+        return false;
+    }
+
+    rc = sqlite3_bind_text(
+        stmt,
+        1,
+        username,
+        -1,
+        nullptr
+    );
+
+    if (rc)
+    {
+        print_errmsg(rc, "error binding username value ", nullptr);
+
+        sqlite3_finalize(stmt);
+        return false;
+    }
+
+    rc = sqlite3_bind_text(
+        stmt,
+        2,
+        password,
+        -1,
+        nullptr
+    );
+
+    if (rc)
+    {
+        print_errmsg(rc, "error binding password value ", nullptr);
+
+        sqlite3_finalize(stmt);
+        return false;
+    }
+
+    rc = sqlite3_bind_text(
+        stmt,
+        3,
+        title,
+        -1,
+        nullptr
+    );
+
+    if (rc)
+    {
+        print_errmsg(rc, "error binding title value ", nullptr);
+
+        sqlite3_finalize(stmt);
+        return false;
+    }
+
+    rc = sqlite3_step(stmt);
+
+    if (rc != SQLITE_DONE && rc != SQLITE_OK)
+    {
+        print_errmsg(rc, "error executing insert stmt", nullptr);
+
+        sqlite3_finalize(stmt);
+        return false;
+    }
+
+    sqlite3_finalize(stmt);
+    return true;
 }

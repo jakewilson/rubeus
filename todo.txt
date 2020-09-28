@@ -34,6 +34,6 @@
 [x] handle character presses on create view
 [ ] arrow keys seem to register as escape ??
 [x] remove model from ListView and have Rubeus pass in needed data instead
-[ ] rename 'website' to 'title' for password_entry
+[x] rename 'website' to 'title' for password_entry
 [ ] insert PasswordEntry when exiting CreateView
 [ ] rename IListObserver to IObserver

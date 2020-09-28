@@ -28,7 +28,7 @@ void Engine::init()
     query << "id INTEGER PRIMARY KEY AUTOINCREMENT";
     query << ", username TEXT";
     query << ", password TEXT";
-    query << ", website TEXT";
+    query << ", title TEXT";
     query << ");";
 
     char *errmsg;
@@ -85,10 +85,10 @@ int select_password_entries_cb(
     const char * id_col = "id";
     const char * username_col = "username";
     const char * password_col = "password";
-    const char * website_col = "website";
+    const char * title_col = "title";
 
     int id;
-    std::string username, password, website;
+    std::string username, password, title;
 
     for (auto i = 0; i < num_columns; i++)
     {
@@ -104,15 +104,15 @@ int select_password_entries_cb(
         {
             password = col_ptrs[i];
         }
-        else if (strncmp(col_names[i], website_col, strlen(website_col)) == 0)
+        else if (strncmp(col_names[i], title_col, strlen(title_col)) == 0)
         {
-            website = col_ptrs[i];
+            title = col_ptrs[i];
         }
     }
 
     auto *entries = reinterpret_cast<std::vector<PasswordEntry> *>(entries_vec);
 
-    entries->push_back({id, username, password, website});
+    entries->push_back({id, username, password, title});
 
     return 0;
 }

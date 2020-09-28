@@ -16,9 +16,9 @@
 #define LIST_HEADER_LINE 4
 #define LIST_START_LINE  5
 
-#define USER_COL    0
-#define PASS_COL    1
-#define WEBSITE_COL 2
+#define TITLE_COL   0
+#define USER_COL    1
+#define PASS_COL    2
 
 class PasswordEntry;
 

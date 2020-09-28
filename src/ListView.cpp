@@ -65,18 +65,18 @@ void ListView::render_list() const
             pad_entry_str(m_entries[i].get_password())
         );
         render_nth_column(
-            WEBSITE_COL,
+            TITLE_COL,
             LIST_START_LINE + i,
-            pad_entry_str(m_entries[i].get_website())
+            pad_entry_str(m_entries[i].get_title())
         );
     }
 }
 
 void ListView::render_list_header() const
 {
+    render_nth_column(TITLE_COL, LIST_HEADER_LINE, "Title");
     render_nth_column(USER_COL, LIST_HEADER_LINE, "Username");
     render_nth_column(PASS_COL, LIST_HEADER_LINE, "Password");
-    render_nth_column(WEBSITE_COL, LIST_HEADER_LINE, "Website");
 }
 
 void ListView::render_nth_column(
@@ -94,8 +94,14 @@ void ListView::render_selected_entry() const
     wattron(m_window, COLOR_PAIR(RUBEUS_BLACK_WHITE));
     const auto& username = pad_entry_str(m_entries[m_selected_entry].get_username());
     const auto& password = pad_entry_str(m_entries[m_selected_entry].get_password());
-    const auto& website =  pad_entry_str(m_entries[m_selected_entry].get_website());
+    const auto& title =  pad_entry_str(m_entries[m_selected_entry].get_title());
 
+    render_nth_column(
+        TITLE_COL,
+        LIST_START_LINE + m_selected_entry,
+        title
+    );
+    render_n_spaces(COL_SIZE - strlen(title) + COL_BUFFER);
     render_nth_column(
         USER_COL,
         LIST_START_LINE + m_selected_entry,
@@ -108,11 +114,6 @@ void ListView::render_selected_entry() const
         password
     );
     render_n_spaces(COL_SIZE - strlen(password) + COL_BUFFER);
-    render_nth_column(
-        WEBSITE_COL,
-        LIST_START_LINE + m_selected_entry,
-        website
-    );
     wattroff(m_window, COLOR_PAIR(RUBEUS_BLACK_WHITE));
 }
 

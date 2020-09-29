@@ -35,7 +35,8 @@
 [ ] arrow keys seem to register as escape ??
 [x] remove model from ListView and have Rubeus pass in needed data instead
 [x] rename 'website' to 'title' for password_entry
-[ ] insert PasswordEntry when exiting CreateView
+[x] insert PasswordEntry when exiting CreateView
 [ ] rename IListObserver to IObserver
 [ ] look into making m_entries a vector of unique_ptrs
 [ ] password_entry is re-selected from after every insert - probably okay to just append instead
+[x] make IModel and IView unique_ptrs in Rubeus

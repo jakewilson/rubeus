@@ -7,5 +7,6 @@ class PasswordEntry;
 class IListObserver
 {
 public:
-    virtual void notify(std::vector<PasswordEntry> const *) = 0;
+    virtual ~IListObserver() {}
+    virtual void notify(const std::vector<PasswordEntry>) = 0;
 };

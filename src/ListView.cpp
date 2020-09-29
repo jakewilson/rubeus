@@ -3,7 +3,7 @@
 #include "ListView.hpp"
 #include "PasswordEntry.hpp"
 
-ListView::ListView(const std::vector<PasswordEntry>& entries) : m_entries(entries)
+ListView::ListView(const std::vector<PasswordEntry> entries) : m_entries(entries)
 {
     m_window = newwin(LINES, COLS, 0, 0);
     box(m_window, 0, 0);

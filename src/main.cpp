@@ -1,4 +1,5 @@
 #include "Rubeus.hpp"
+#include "RubeusCommand.hpp"
 
 #include <iostream>
 

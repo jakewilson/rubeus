@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(rubeus)
 
 set(RUBEUS_SOURCE_FILES
+    inc/CommandView.hpp src/CommandView.cpp
     inc/CreateView.hpp src/CreateView.cpp
     inc/Engine.hpp src/Engine.cpp
     inc/IListObserver.hpp
@@ -13,6 +14,7 @@ set(RUBEUS_SOURCE_FILES
     inc/Model.hpp src/Model.cpp
     inc/PasswordEntry.hpp src/PasswordEntry.cpp
     inc/Rubeus.hpp src/Rubeus.cpp
+    inc/RubeusCommand.hpp src/RubeusCommand.cpp
 
     inc/colors.hpp src/colors.cpp
 

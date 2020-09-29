@@ -40,3 +40,4 @@
 [ ] look into making m_entries a vector of unique_ptrs
 [ ] password_entry is re-selected from after every insert - probably okay to just append instead
 [x] make IModel and IView unique_ptrs in Rubeus
+[ ] add `dirty` flag to `PasswordEntry`; when rubeus exits, update all `dirty` entries to the db

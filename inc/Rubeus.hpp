@@ -1,17 +1,20 @@
 #pragma once
 
 #include "CommandView.hpp"
+#include "CreateView.hpp"
+#include "ListView.hpp"
 #include "IListObserver.hpp"
+#include "IModel.hpp"
+#include "IView.hpp"
+#include "PasswordEntry.hpp"
 
 #include <memory>
 #include <vector>
 
-class IModel;
-class IView;
-class PasswordEntry;
-
 constexpr int escape_key    = 27;
 constexpr int backspace_key = 127;
+
+constexpr int window_padding = 3;
 
 class Rubeus : public IListObserver
 {
@@ -47,5 +50,8 @@ private:
     void toggle_list_view();
     void toggle_create_view();
 
-   const int m_command_view_y {LINES - 1};
+    std::unique_ptr<ListView> make_list_view();
+    std::unique_ptr<CreateView> make_create_view();
+
+    const int m_command_view_y {LINES - 1};
 };

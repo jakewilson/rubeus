@@ -4,12 +4,10 @@
 #include <string>
 #include <ncurses.h>
 
-
-
-CreateView::CreateView(int window_height)
-    : m_focus(Focus::title), m_window_height(window_height)
+CreateView::CreateView(int x, int y, int w, int h)
+    :IView(x, y, w, h),
+     m_focus(Focus::title)
 {
-    m_window = newwin(m_window_height, COLS, 0, 0);
     box(m_window, 0, 0);
 
     notimeout(m_window, true);
@@ -23,21 +21,21 @@ void CreateView::render()
     render_header();
     mvwprintw(
         m_window,
-        TITLE_Y,
-        TITLE_X,
-        "%s%s", TITLE_LABEL, m_title.c_str()
+        title_y,
+        0,
+        "%s%s", title_label.c_str(), m_title.c_str()
     );
     mvwprintw(
         m_window,
-        USERNAME_Y,
-        USERNAME_X,
-        "%s%s", USERNAME_LABEL, m_username.c_str()
+        username_y,
+        0,
+        "%s%s", username_label.c_str(), m_username.c_str()
     );
     mvwprintw(
         m_window,
-        PASSWORD_Y,
-        PASSWORD_X,
-        "%s%s", PASSWORD_LABEL, m_password.c_str()
+        password_y,
+        0,
+        "%s%s", password_label.c_str(), m_password.c_str()
     );
 
     place_cursor();
@@ -49,13 +47,13 @@ void CreateView::place_cursor()
     switch (m_focus)
     {
         case Focus::title:
-            wmove(m_window, TITLE_Y, TITLE_CURSOR_X + m_title.length());
+            wmove(m_window, title_y, title_cursor_x + m_title.length());
             break;
         case Focus::username:
-            wmove(m_window, USERNAME_Y, USERNAME_CURSOR_X + m_username.length());
+            wmove(m_window, username_y, username_cursor_x + m_username.length());
             break;
         case Focus::password:
-            wmove(m_window, PASSWORD_Y, PASSWORD_CURSOR_X + m_password.length());
+            wmove(m_window, password_y, password_cursor_x + m_password.length());
             break;
     }
 }
@@ -69,7 +67,7 @@ void CreateView::render_header() const
 {
     const char *header_str = "Create a new password";
     wattron(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
-    mvwprintw(m_window, 1, (COLS / 2) - strlen(header_str) / 2, header_str);
+    mvwprintw(m_window, 0, (m_w / 2) - strlen(header_str) / 2, header_str);
     wattroff(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
 }
 

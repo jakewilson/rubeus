@@ -1,6 +1,4 @@
 #include "colors.hpp"
-#include "CreateView.hpp"
-#include "ListView.hpp"
 #include "Logger.hpp"
 #include "Model.hpp"
 #include "Rubeus.hpp"
@@ -12,7 +10,7 @@ Rubeus::Rubeus()
 {
     m_model->register_list_observer(this);
 
-    m_view = std::make_unique<ListView>(m_entries, m_command_view_y);
+    m_view = make_list_view();
     m_command_view.set_commands({{106, "move down"}, {107, "move up"}});
     m_keep_running = true;
 }
@@ -116,17 +114,38 @@ void Rubeus::process_create_view_input(const int c)
 
 void Rubeus::toggle_list_view()
 {
-    m_view = std::make_unique<ListView>(m_entries, m_command_view_y);
+    m_view = make_list_view();
     m_view_state = ViewState::list;
 }
 
 void Rubeus::toggle_create_view()
 {
-    m_view = std::make_unique<CreateView>(m_command_view_y);
+    m_view = make_create_view();
     m_view_state = ViewState::create;
 }
 
 void Rubeus::notify(const std::vector<PasswordEntry> entries)
 {
     m_entries = entries;
+}
+
+std::unique_ptr<ListView> Rubeus::make_list_view()
+{
+    return std::make_unique<ListView>(
+        m_entries,
+        window_padding,
+        window_padding,
+        COLS - (window_padding * 2),
+        m_command_view_y - window_padding
+    );
+}
+
+std::unique_ptr<CreateView> Rubeus::make_create_view()
+{
+    return std::make_unique<CreateView>(
+        window_padding,
+        window_padding,
+        COLS - (window_padding * 2),
+        m_command_view_y - window_padding
+    );
 }

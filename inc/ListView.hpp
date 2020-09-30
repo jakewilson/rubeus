@@ -6,27 +6,22 @@
 #include <ncurses.h>
 #include <vector>
 
-#define NUM_RUBEUS_COLS 4
-#define COL_OFFSET 3
-#define COL_SIZE (COLS - (2 * COL_OFFSET)) / NUM_RUBEUS_COLS
-#define COL_BUFFER 2
-
-#define RUBEUS_COL_START COL_OFFSET
-
-#define LIST_HEADER_LINE 4
-#define LIST_START_LINE  5
-
-#define TITLE_COL   0
-#define USER_COL    1
-#define PASS_COL    2
-
 class PasswordEntry;
+
+constexpr int list_header_line = 0;
+constexpr int list_start_line = 1;
+constexpr int num_columns = 3;
+constexpr int col_buffer = 2;
+
+constexpr int title_col = 0;
+constexpr int user_col = 1;
+constexpr int pass_col = 2;
 
 class ListView : public IView
 {
 public:
-    ListView(const std::vector<PasswordEntry> entries, int);
-    ~ListView();
+    ListView(const std::vector<PasswordEntry> entries, int, int, int, int);
+    ~ListView() {}
 
     void render() override;
     const int get_input() override;
@@ -35,17 +30,15 @@ public:
     void selected_entry_down();
 
 private:
-    WINDOW *m_window;
-    int m_window_height;
-
     int m_list_start;
     int m_list_end;
     const int m_num_visible_items;
 
+    const int m_col_size;
+
     const std::vector<PasswordEntry> m_entries;
     int m_selected_entry {0};
 
-    void print_header() const;
     void render_list() const;
     void render_list_header() const;
     void render_nth_column(int, int, const char *) const;

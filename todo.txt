@@ -42,5 +42,7 @@
 [x] add pagination for list
 [ ] extend commandview length
 [ ] change commands when views change
-[ ] COL_BUFFER should be passed into windows as the starting x cord
-[ ] remove #defines in ListView and replace with const
+[x] COL_BUFFER should be passed into windows as the starting x cord
+[x] remove #defines in ListView and replace with const
+[ ] make commandview unique_ptr
+[ ] add search

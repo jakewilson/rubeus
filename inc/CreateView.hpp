@@ -5,20 +5,17 @@
 #include <string>
 #include <ncurses.h>
 
-#define TITLE_X 3
-#define TITLE_Y 3
-#define TITLE_LABEL "Title: "
-#define TITLE_CURSOR_X TITLE_X + strlen(TITLE_LABEL)
+constexpr int title_y = 1;
+constexpr int username_y = 2;
+constexpr int password_y = 3;
 
-#define USERNAME_X 3
-#define USERNAME_Y 4
-#define USERNAME_LABEL "Username: "
-#define USERNAME_CURSOR_X USERNAME_X + strlen(USERNAME_LABEL)
+const std::string title_label {"Title: "};
+const std::string username_label {"Username: "};
+const std::string password_label {"Password: "};
 
-#define PASSWORD_X 3
-#define PASSWORD_Y 5
-#define PASSWORD_LABEL "Password: "
-#define PASSWORD_CURSOR_X PASSWORD_X + strlen(PASSWORD_LABEL)
+const int title_cursor_x = title_label.length();
+const int username_cursor_x = username_label.length();
+const int password_cursor_x = password_label.length();
 
 enum class Focus
 {
@@ -30,7 +27,7 @@ enum class Focus
 class CreateView : public IView
 {
 public:
-    CreateView(int);
+    CreateView(int, int, int, int);
     ~CreateView() {}
 
     void render() override;
@@ -53,9 +50,6 @@ public:
     const std::string get_password() { return m_password; }
 
 private:
-    WINDOW *m_window;
-
-    int m_window_height;
 
     std::string m_title {""};
     std::string m_username {""};

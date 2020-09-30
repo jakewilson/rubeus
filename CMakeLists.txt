@@ -8,7 +8,7 @@ set(RUBEUS_SOURCE_FILES
     inc/Engine.hpp src/Engine.cpp
     inc/IListObserver.hpp
     inc/IModel.hpp
-    inc/IView.hpp
+    inc/IView.hpp src/IView.cpp
     inc/ListView.hpp src/ListView.cpp
     inc/Logger.hpp src/Logger.cpp
     inc/Model.hpp src/Model.cpp

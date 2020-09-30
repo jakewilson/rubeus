@@ -8,15 +8,19 @@
 
 ListView::ListView(
     const std::vector<PasswordEntry> entries,
-    int window_height
-) : m_entries(entries),
-    m_window_height(window_height),
+    int x,
+    int y,
+    int w,
+    int h
+) :
+    IView(x, y, w, h),
+    m_entries(entries),
+    m_col_size(w / num_columns),
     m_num_visible_items(std::min(
         static_cast<int>(entries.size()),
-        window_height - LIST_START_LINE
+        h - list_start_line
     ))
 {
-    m_window = newwin(m_window_height, COLS, 0, 0);
     box(m_window, 0, 0);
 
     curs_set(0); // make the cursor invisible
@@ -25,20 +29,15 @@ ListView::ListView(
     m_list_end = m_num_visible_items;
 }
 
-ListView::~ListView()
-{
-    delwin(m_window);
-}
-
 // debug fn
 void ListView::print_grid() const
 {
-    for (auto line = 0; line < LINES; line++)
+    for (auto line = m_y; line < m_y + m_h; line++)
     {
         mvwprintw(m_window, line, 0, "%d", line);
     }
 
-    for (auto col = 1; col < COLS - 1; col++)
+    for (auto col = m_x; col < m_w + m_x; col++)
     {
         if (col % 10 == 0)
             mvwprintw(m_window, 0, col, "%d", col / 10);
@@ -49,7 +48,6 @@ void ListView::print_grid() const
 void ListView::render()
 {
     wclear(m_window);
-    print_header();
     render_list_header();
     render_list();
     wrefresh(m_window);
@@ -59,7 +57,7 @@ void ListView::render_list() const
 {
     for (auto i = m_list_start; i < m_list_end; i++)
     {
-        auto y_pos = LIST_START_LINE + (i - m_list_start);
+        auto y_pos = list_start_line + (i - m_list_start);
         if (i == m_selected_entry)
         {
             render_selected_entry(y_pos);
@@ -67,17 +65,17 @@ void ListView::render_list() const
         }
 
         render_nth_column(
-            USER_COL,
+            user_col,
             y_pos,
             pad_entry_str(m_entries[i].get_username())
         );
         render_nth_column(
-            PASS_COL,
+            pass_col,
             y_pos,
             pad_entry_str(m_entries[i].get_password())
         );
         render_nth_column(
-            TITLE_COL,
+            title_col,
             y_pos,
             pad_entry_str(m_entries[i].get_title())
         );
@@ -86,9 +84,9 @@ void ListView::render_list() const
 
 void ListView::render_list_header() const
 {
-    render_nth_column(TITLE_COL, LIST_HEADER_LINE, "Title");
-    render_nth_column(USER_COL, LIST_HEADER_LINE, "Username");
-    render_nth_column(PASS_COL, LIST_HEADER_LINE, "Password");
+    render_nth_column(title_col, list_header_line, "Title");
+    render_nth_column(user_col, list_header_line, "Username");
+    render_nth_column(pass_col, list_header_line, "Password");
 }
 
 void ListView::render_nth_column(
@@ -97,7 +95,7 @@ void ListView::render_nth_column(
     const char * str
 ) const
 {
-    const int col = RUBEUS_COL_START + ((COL_BUFFER + COL_SIZE) * col_number);
+    const int col = (col_buffer + m_col_size) * col_number;
     mvwprintw(m_window, line_number, col, str);
 }
 
@@ -108,24 +106,30 @@ void ListView::render_selected_entry(int y_pos) const
     const auto& password = pad_entry_str(m_entries[m_selected_entry].get_password());
     const auto& title =  pad_entry_str(m_entries[m_selected_entry].get_title());
 
+    int curs_x = 0;
+    int curs_y = 0;
+
     render_nth_column(
-        TITLE_COL,
+        title_col,
         y_pos,
         title
     );
-    render_n_spaces(COL_SIZE - strlen(title) + COL_BUFFER);
+    getyx(m_window, curs_y, curs_x);
+    render_n_spaces(((m_col_size + col_buffer) * (title_col + 1)) - curs_x + 1);
     render_nth_column(
-        USER_COL,
+        user_col,
         y_pos,
         username
     );
-    render_n_spaces(COL_SIZE - strlen(username) + COL_BUFFER);
+    getyx(m_window, curs_y, curs_x);
+    render_n_spaces(((m_col_size + col_buffer) * (user_col + 1)) - curs_x + 1);
     render_nth_column(
-        PASS_COL,
+        pass_col,
         y_pos,
         password
     );
-    render_n_spaces(COL_SIZE - strlen(password) + COL_BUFFER);
+    getyx(m_window, curs_y, curs_x);
+    render_n_spaces(m_w - curs_x);
     wattroff(m_window, COLOR_PAIR(RUBEUS_BLACK_WHITE));
 }
 
@@ -139,24 +143,12 @@ void ListView::render_n_spaces(int n) const
 
 const char * ListView::pad_entry_str(std::string str) const
 {
-    if (str.length() > COL_SIZE)
+    if (str.length() > m_col_size)
     {
-        str = str.substr(0, COL_SIZE - 3) + "...";
+        str = str.substr(0, m_col_size - 3) + "...";
     }
 
     return str.c_str();
-}
-
-void ListView::print_header() const
-{
-    const int starting_line {2};
-    const int starting_col {(COLS / 2) - 3};
-
-    wattron(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
-
-    mvwprintw(m_window, starting_line, starting_col, "rubeus");
-
-    wattroff(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
 }
 
 void ListView::selected_entry_up()

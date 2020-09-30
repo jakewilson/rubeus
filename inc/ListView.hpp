@@ -30,13 +30,6 @@ public:
 
     void render() override;
     const int get_input() override;
-    void render_list() const;
-    void render_list_header() const;
-    void render_nth_column(int, int, const char *) const;
-    void render_selected_entry() const;
-    void render_n_spaces(int) const;
-    const char * pad_entry_str(std::string) const;
-    void print_grid() const;
 
     void selected_entry_up();
     void selected_entry_down();
@@ -45,8 +38,19 @@ private:
     WINDOW *m_window;
     int m_window_height;
 
+    int m_list_start;
+    int m_list_end;
+    const int m_num_visible_items;
+
     const std::vector<PasswordEntry> m_entries;
     int m_selected_entry {0};
 
     void print_header() const;
+    void render_list() const;
+    void render_list_header() const;
+    void render_nth_column(int, int, const char *) const;
+    void render_selected_entry(int) const;
+    void render_n_spaces(int) const;
+    const char * pad_entry_str(std::string) const;
+    void print_grid() const;
 };

@@ -8,10 +8,6 @@
 CommandView::CommandView(int window_y)
     : m_window_y(window_y)
 {
-    std::stringstream ss {};
-    ss << "lines: " << LINES;
-    ss << "cols: " << COLS;
-    logger << ss.str();
     m_window = newwin(2, COLS, m_window_y, 0);
     curs_set(0);
 }
@@ -24,7 +20,7 @@ CommandView::~CommandView()
 void CommandView::render()
 {
     wattron(m_window, COLOR_PAIR(RUBEUS_BLACK_GREEN));
-    mvwprintw(m_window, 0, 0, "%s", m_command_str.c_str());
+    mvwprintw(m_window, 0, 0, " %s ", m_command_str.c_str());
     wattroff(m_window, COLOR_PAIR(RUBEUS_BLACK_GREEN));
     wrefresh(m_window);
 }
@@ -35,6 +31,4 @@ void CommandView::set_commands(const std::vector<RubeusCommand>& commands)
     {
         m_command_str += command.to_str() + " ";
     }
-    logger << "COMMANDS TR";
-    logger << m_command_str;
 }

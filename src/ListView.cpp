@@ -3,15 +3,26 @@
 #include "ListView.hpp"
 #include "PasswordEntry.hpp"
 
+#include <algorithm>
+#include <sstream>
+
 ListView::ListView(
     const std::vector<PasswordEntry> entries,
     int window_height
-) : m_entries(entries), m_window_height(window_height)
+) : m_entries(entries),
+    m_window_height(window_height),
+    m_num_visible_items(std::min(
+        static_cast<int>(entries.size()),
+        window_height - LIST_START_LINE
+    ))
 {
     m_window = newwin(m_window_height, COLS, 0, 0);
     box(m_window, 0, 0);
 
     curs_set(0); // make the cursor invisible
+
+    m_list_start = 0;
+    m_list_end = m_num_visible_items;
 }
 
 ListView::~ListView()
@@ -22,12 +33,10 @@ ListView::~ListView()
 // debug fn
 void ListView::print_grid() const
 {
-/*
     for (auto line = 0; line < LINES; line++)
     {
         mvwprintw(m_window, line, 0, "%d", line);
     }
-*/
 
     for (auto col = 1; col < COLS - 1; col++)
     {
@@ -40,7 +49,6 @@ void ListView::print_grid() const
 void ListView::render()
 {
     wclear(m_window);
-    //print_grid();
     print_header();
     render_list_header();
     render_list();
@@ -49,27 +57,28 @@ void ListView::render()
 
 void ListView::render_list() const
 {
-    for (auto i = 0; i < m_entries.size(); i++)
+    for (auto i = m_list_start; i < m_list_end; i++)
     {
+        auto y_pos = LIST_START_LINE + (i - m_list_start);
         if (i == m_selected_entry)
         {
-            render_selected_entry();
+            render_selected_entry(y_pos);
             continue;
         }
 
         render_nth_column(
             USER_COL,
-            LIST_START_LINE + i,
+            y_pos,
             pad_entry_str(m_entries[i].get_username())
         );
         render_nth_column(
             PASS_COL,
-            LIST_START_LINE + i,
+            y_pos,
             pad_entry_str(m_entries[i].get_password())
         );
         render_nth_column(
             TITLE_COL,
-            LIST_START_LINE + i,
+            y_pos,
             pad_entry_str(m_entries[i].get_title())
         );
     }
@@ -92,7 +101,7 @@ void ListView::render_nth_column(
     mvwprintw(m_window, line_number, col, str);
 }
 
-void ListView::render_selected_entry() const
+void ListView::render_selected_entry(int y_pos) const
 {
     wattron(m_window, COLOR_PAIR(RUBEUS_BLACK_WHITE));
     const auto& username = pad_entry_str(m_entries[m_selected_entry].get_username());
@@ -101,19 +110,19 @@ void ListView::render_selected_entry() const
 
     render_nth_column(
         TITLE_COL,
-        LIST_START_LINE + m_selected_entry,
+        y_pos,
         title
     );
     render_n_spaces(COL_SIZE - strlen(title) + COL_BUFFER);
     render_nth_column(
         USER_COL,
-        LIST_START_LINE + m_selected_entry,
+        y_pos,
         username
     );
     render_n_spaces(COL_SIZE - strlen(username) + COL_BUFFER);
     render_nth_column(
         PASS_COL,
-        LIST_START_LINE + m_selected_entry,
+        y_pos,
         password
     );
     render_n_spaces(COL_SIZE - strlen(password) + COL_BUFFER);
@@ -152,30 +161,41 @@ void ListView::print_header() const
 
 void ListView::selected_entry_up()
 {
-    /*
-        "up" on the screen is "down" in the list,
-        item 0 is at the top and the list flows downwards
-        so moving "up" on the screen decrements the list index
-    */
-    m_selected_entry--;
-    if (m_selected_entry < 0)
+    if (m_selected_entry == m_list_start && m_selected_entry > 0)
     {
-        m_selected_entry = m_entries.size() - 1;
+        m_list_end--;
+        m_list_start--;
+        m_selected_entry = m_list_start;
+    }
+    else if (m_selected_entry == 0)
+    {
+        m_list_end = m_entries.size();
+        m_list_start = m_list_end - m_num_visible_items;
+        m_selected_entry = m_list_end - 1;
+    }
+    else
+    {
+        m_selected_entry--;
     }
 }
 
 void ListView::selected_entry_down()
 {
-    /*
-        "down" on the screen is "up" in the list,
-        item 0 is at the top and the list flows downwards
-        so moving "down" on the screen increments the list index
-    */
-    m_selected_entry = (m_selected_entry + 1) % m_entries.size();
+    m_selected_entry++;
+    if (m_selected_entry == m_list_end && m_selected_entry < m_entries.size())
+    {
+        m_list_start++;
+        m_list_end++;
+    }
+    else if (m_selected_entry == m_entries.size())
+    {
+        m_selected_entry = 0;
+        m_list_start = 0;
+        m_list_end = m_num_visible_items;
+    }
 }
 
 const int ListView::get_input()
 {
-    // TODO move this into IView
     return wgetch(m_window);
 }

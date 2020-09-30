@@ -23,8 +23,10 @@ void Rubeus::run()
 {
     while (m_keep_running)
     {
-        m_view->render();
+        // render command_view first because we want the 'main' view
+        // to have the cursor
         m_command_view.render();
+        m_view->render();
         process_input(m_view->get_input());
     }
 }

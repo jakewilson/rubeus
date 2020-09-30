@@ -3,7 +3,7 @@
 [ ] add line/row numbers in yellow (like vim)
 [x] display rows in db
 [x] render rows from model in listview
-[ ] selected row should be inverse fg/bg colors or something more subtle
+[x] selected row should be inverse fg/bg colors or something more subtle
 [x] add create row view for creating a new entry
 [ ] add encryption with a private key or password
 [ ] add sorting for columns
@@ -28,20 +28,19 @@
 [ ] allow logger to accept multiple string args (e.g. logger << "cool" << "hi")
 [ ] add command for going forward/backwards by a 'page' which will be a runtime-val depending on LINES
 [ ] add readme
-[ ] move m_window and get_input to IView
-[ ] have two additional windows - header and footer so each screen doesn't have to render them
+[ ] implement header window
 [x] implement backspace
 [x] handle character presses on create view
 [ ] arrow keys seem to register as escape ??
 [x] remove model from ListView and have Rubeus pass in needed data instead
 [x] rename 'website' to 'title' for password_entry
 [x] insert PasswordEntry when exiting CreateView
-[ ] rename IListObserver to IObserver
-[ ] look into making m_entries a vector of unique_ptrs
 [ ] password_entry is re-selected from after every insert - probably okay to just append instead
 [x] make IModel and IView unique_ptrs in Rubeus
 [ ] add `dirty` flag to `PasswordEntry`; when rubeus exits, update all `dirty` entries to the db
-[ ] bug where if window size < list size, scrolling is weird
-[ ] add pagination for list
+[x] bug where if window size < list size, scrolling is weird
+[x] add pagination for list
 [ ] extend commandview length
 [ ] change commands when views change
+[ ] COL_BUFFER should be passed into windows as the starting x cord
+[ ] remove #defines in ListView and replace with const

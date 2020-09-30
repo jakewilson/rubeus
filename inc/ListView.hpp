@@ -25,7 +25,7 @@ class PasswordEntry;
 class ListView : public IView
 {
 public:
-    ListView(const std::vector<PasswordEntry> entries);
+    ListView(const std::vector<PasswordEntry> entries, int);
     ~ListView();
 
     void render() override;
@@ -43,6 +43,7 @@ public:
 
 private:
     WINDOW *m_window;
+    int m_window_height;
 
     const std::vector<PasswordEntry> m_entries;
     int m_selected_entry {0};

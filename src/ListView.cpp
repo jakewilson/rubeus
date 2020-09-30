@@ -3,9 +3,12 @@
 #include "ListView.hpp"
 #include "PasswordEntry.hpp"
 
-ListView::ListView(const std::vector<PasswordEntry> entries) : m_entries(entries)
+ListView::ListView(
+    const std::vector<PasswordEntry> entries,
+    int window_height
+) : m_entries(entries), m_window_height(window_height)
 {
-    m_window = newwin(LINES, COLS, 0, 0);
+    m_window = newwin(m_window_height, COLS, 0, 0);
     box(m_window, 0, 0);
 
     curs_set(0); // make the cursor invisible

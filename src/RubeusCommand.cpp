@@ -7,11 +7,24 @@ RubeusCommand::RubeusCommand(const int key, const std::string description)
 {
 }
 
-std::string RubeusCommand::to_str()
+std::unordered_map<int, std::string> key_desc_map =
 {
-    // TODO if char is a visible char, don't use the map
-    auto desc = key_desc_map[m_key];
+    { 27, "esc"}
+};
+
+std::string RubeusCommand::to_str() const
+{
+    std::string key_str {};
+    if (m_key >= 32 && m_key <= 126)
+    { 
+        key_str = static_cast<char>(m_key);
+    }
+    else
+    {
+        key_str = key_desc_map[m_key];
+    }
+
     std::stringstream ss;
-    ss << "[" << desc << "] " << m_description;
+    ss << "[" << key_str << "] " << m_description;
     return ss.str();
 }

@@ -30,7 +30,7 @@ enum class Focus
 class CreateView : public IView
 {
 public:
-    CreateView();
+    CreateView(int);
     ~CreateView() {}
 
     void render() override;
@@ -54,6 +54,8 @@ public:
 
 private:
     WINDOW *m_window;
+
+    int m_window_height;
 
     std::string m_title {""};
     std::string m_username {""};

@@ -1,16 +1,22 @@
-#include <initializer_list>
+#pragma once
+
+#include "RubeusCommand.hpp"
+
+#include <ncurses.h>
 #include <string>
-#include <vector>
 
 class CommandView
 {
 public:
-    CommandView(std::initializer_list<int>);
-    ~CommandView() {}
+    CommandView(int);
+    ~CommandView();
 
     void render();
+    void set_commands(const std::vector<RubeusCommand>&);
 
 private:
-    // TODO this should be vector<RubeusCommand>
-    std::vector<int> m_commands;
+    std::string m_command_str;
+
+    WINDOW *m_window;
+    int m_window_y;
 };

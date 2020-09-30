@@ -8,36 +8,23 @@
 #include <ncurses.h>
 
 Rubeus::Rubeus()
+    : m_model(std::make_unique<Model>()), m_command_view(LINES - 1) // TODO not LINES - 1
 {
-    init();
-
-    m_model = std::make_unique<Model>();
     m_model->register_list_observer(this);
 
-    m_view = std::make_unique<ListView>(m_entries);
+    m_view = std::make_unique<ListView>(m_entries, m_command_view_y);
+    m_command_view.set_commands({{106, "move down"}, {107, "move up"}});
     m_keep_running = true;
 }
 
-Rubeus::~Rubeus()
-{
-    endwin();
-}
-
-void Rubeus::init()
-{
-    initscr();
-    cbreak();
-    keypad(stdscr, true);
-    noecho();
-    refresh(); // not sure why this is needed
-    init_colors();
-}
+Rubeus::~Rubeus() {}
 
 void Rubeus::run()
 {
     while (m_keep_running)
     {
         m_view->render();
+        m_command_view.render();
         process_input(m_view->get_input());
     }
 }
@@ -127,13 +114,13 @@ void Rubeus::process_create_view_input(const int c)
 
 void Rubeus::toggle_list_view()
 {
-    m_view = std::make_unique<ListView>(m_entries);
+    m_view = std::make_unique<ListView>(m_entries, m_command_view_y);
     m_view_state = ViewState::list;
 }
 
 void Rubeus::toggle_create_view()
 {
-    m_view = std::make_unique<CreateView>();
+    m_view = std::make_unique<CreateView>(m_command_view_y);
     m_view_state = ViewState::create;
 }
 

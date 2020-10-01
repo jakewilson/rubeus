@@ -5,10 +5,9 @@
 #include <sstream>
 #include <vector>
 
-CommandView::CommandView(int window_y)
-    : m_window_y(window_y)
+CommandView::CommandView(int x, int y, int w, int h)
 {
-    m_window = newwin(2, COLS, m_window_y, 0);
+    m_window = newwin(h, w, y, x);
     curs_set(0);
 }
 
@@ -19,9 +18,10 @@ CommandView::~CommandView()
 
 void CommandView::render()
 {
-    wattron(m_window, COLOR_PAIR(RUBEUS_BLACK_GREEN));
-    mvwprintw(m_window, 0, 0, " %s ", m_command_str.c_str());
-    wattroff(m_window, COLOR_PAIR(RUBEUS_BLACK_GREEN));
+    mvwprintw(m_window, 0, 0, "%s", m_command_str.c_str());
+    wmove(m_window, 0, 0);
+    // make the whole line green
+    wchgat(m_window, -1, 0, RUBEUS_BLACK_GREEN, NULL);
     wrefresh(m_window);
 }
 

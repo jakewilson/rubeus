@@ -8,7 +8,7 @@
 class CommandView
 {
 public:
-    CommandView(int);
+    CommandView(int, int, int, int);
     ~CommandView();
 
     void render();
@@ -18,5 +18,4 @@ private:
     std::string m_command_str;
 
     WINDOW *m_window;
-    int m_window_y;
 };

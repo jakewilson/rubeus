@@ -6,11 +6,13 @@
 #include <ncurses.h>
 
 Rubeus::Rubeus()
-    : m_model(std::make_unique<Model>()), m_command_view(LINES - 1) // TODO not LINES - 1
+    :
+    m_model(std::make_unique<Model>()),
+    m_command_view(window_padding, COMMAND_VIEW_Y, COLS - (window_padding * 2), 1)
 {
     m_model->register_list_observer(this);
 
-    m_view = make_list_view();
+    m_main_view = make_list_view();
     m_command_view.set_commands({{106, "move down"}, {107, "move up"}});
     m_keep_running = true;
 }
@@ -24,8 +26,8 @@ void Rubeus::run()
         // render command_view first because we want the 'main' view
         // to have the cursor
         m_command_view.render();
-        m_view->render();
-        process_input(m_view->get_input());
+        m_main_view->render();
+        process_input(m_main_view->get_input());
     }
 }
 
@@ -45,7 +47,7 @@ void Rubeus::process_input(const int c)
 
 void Rubeus::process_list_view_input(const int c)
 {
-    auto list_view = dynamic_cast<ListView *>(m_view.get());
+    auto list_view = dynamic_cast<ListView *>(m_main_view.get());
     if (list_view == nullptr) // should be impossible
         return;
 
@@ -73,7 +75,7 @@ void Rubeus::process_list_view_input(const int c)
 
 void Rubeus::process_create_view_input(const int c)
 {
-    auto create_view = dynamic_cast<CreateView *>(m_view.get());
+    auto create_view = dynamic_cast<CreateView *>(m_main_view.get());
     if (create_view == nullptr) // should be impossible
         return;
 
@@ -114,13 +116,13 @@ void Rubeus::process_create_view_input(const int c)
 
 void Rubeus::toggle_list_view()
 {
-    m_view = make_list_view();
+    m_main_view = make_list_view();
     m_view_state = ViewState::list;
 }
 
 void Rubeus::toggle_create_view()
 {
-    m_view = make_create_view();
+    m_main_view = make_create_view();
     m_view_state = ViewState::create;
 }
 
@@ -136,7 +138,7 @@ std::unique_ptr<ListView> Rubeus::make_list_view()
         window_padding,
         window_padding,
         COLS - (window_padding * 2),
-        m_command_view_y - window_padding
+        COMMAND_VIEW_Y - window_padding
     );
 }
 
@@ -146,6 +148,6 @@ std::unique_ptr<CreateView> Rubeus::make_create_view()
         window_padding,
         window_padding,
         COLS - (window_padding * 2),
-        m_command_view_y - window_padding
+        COMMAND_VIEW_Y - window_padding
     );
 }

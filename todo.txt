@@ -17,7 +17,7 @@
 [ ] add edit entry class
 [ ] render footer which shows commands
 [x] fix spaces still being highlighted when switching lines
-[x] add arrow key support as well as j/k
+[ ] add arrow key support as well as j/k (broken again - I think has to do with timeout? see 34)
 [ ] what happened to the (ListView) border??
 [x] create password_entry table on engine init if it doesn't exist
 [x] make password_entry.id AUTO INC
@@ -40,9 +40,11 @@
 [ ] add `dirty` flag to `PasswordEntry`; when rubeus exits, update all `dirty` entries to the db
 [x] bug where if window size < list size, scrolling is weird
 [x] add pagination for list
-[ ] extend commandview length
+[x] extend commandview length
 [ ] change commands when views change
 [x] COL_BUFFER should be passed into windows as the starting x cord
 [x] remove #defines in ListView and replace with const
 [ ] make commandview unique_ptr
 [ ] add search
+[ ] look into chgat for ListView::m_selected_entry
+[ ] what is A_STANDOUT?

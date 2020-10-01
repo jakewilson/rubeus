@@ -11,10 +11,12 @@
 #include <memory>
 #include <vector>
 
+#define COMMAND_VIEW_Y LINES - 1
+
 constexpr int escape_key    = 27;
 constexpr int backspace_key = 127;
 
-constexpr int window_padding = 3;
+constexpr int window_padding = 2;
 
 class Rubeus : public IListObserver
 {
@@ -33,7 +35,7 @@ public:
 
 private:
     std::unique_ptr<IModel> m_model;
-    std::unique_ptr<IView> m_view;
+    std::unique_ptr<IView> m_main_view;
 
     bool m_keep_running {true};
 
@@ -52,6 +54,4 @@ private:
 
     std::unique_ptr<ListView> make_list_view();
     std::unique_ptr<CreateView> make_create_view();
-
-    const int m_command_view_y {LINES - 1};
 };

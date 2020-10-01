@@ -18,6 +18,7 @@ CommandView::~CommandView()
 
 void CommandView::render()
 {
+    wclear(m_window);
     mvwprintw(m_window, 0, 0, "%s", m_command_str.c_str());
     wmove(m_window, 0, 0);
     // make the whole line green
@@ -27,8 +28,11 @@ void CommandView::render()
 
 void CommandView::set_commands(const std::vector<RubeusCommand>& commands)
 {
+    std::string command_str {};
     for (const auto& command : commands)
     {
-        m_command_str += command.to_str() + " ";
+        command_str += command.to_str() + " ";
     }
+
+    m_command_str = command_str;
 }

@@ -83,9 +83,9 @@ void ListView::render_list() const
 
 void ListView::render_list_header() const
 {
-    render_nth_column(title_col, list_header_line, "Title");
-    render_nth_column(user_col, list_header_line, "Username");
-    render_nth_column(pass_col, list_header_line, "Password");
+    render_nth_column(title_col, list_header_line, "TITLE");
+    render_nth_column(user_col, list_header_line, "USERNAME");
+    render_nth_column(pass_col, list_header_line, "PASSWORD");
 }
 
 void ListView::render_nth_column(

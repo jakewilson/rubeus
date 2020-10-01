@@ -13,6 +13,7 @@
 
 #define COMMAND_VIEW_Y LINES - 1
 
+constexpr int enter_key     = 10;
 constexpr int escape_key    = 27;
 constexpr int backspace_key = 127;
 
@@ -54,4 +55,7 @@ private:
 
     std::unique_ptr<ListView> make_list_view();
     std::unique_ptr<CreateView> make_create_view();
+
+    std::vector<RubeusCommand> get_list_view_commands();
+    std::vector<RubeusCommand> get_create_view_commands();
 };

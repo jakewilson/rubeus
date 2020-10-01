@@ -9,6 +9,7 @@ RubeusCommand::RubeusCommand(const int key, const std::string description)
 
 std::unordered_map<int, std::string> key_desc_map =
 {
+    { 10, "enter"},
     { 27, "esc"}
 };
 

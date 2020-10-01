@@ -157,52 +157,35 @@ bool Engine::add_password_entry(
         return false;
     }
 
-    rc = sqlite3_bind_text(
-        stmt,
-        1,
-        username,
-        -1,
-        nullptr
-    );
+    std::vector<std::pair<const char *, const char *>> bind_values = {
+        {"username", username},
+        {"password", password},
+        {"title", title},
+    };
 
-    if (rc)
+    for (auto i = 0; i < bind_values.size(); i++)
     {
-        print_errmsg(rc, "error binding username value ", nullptr);
+        auto label = bind_values[i].first;
+        auto value = bind_values[i].second;
 
-        sqlite3_finalize(stmt);
-        return false;
-    }
+        rc = sqlite3_bind_text(
+            stmt,
+            (i + 1),
+            value,
+            -1,
+            nullptr
+        );
 
-    rc = sqlite3_bind_text(
-        stmt,
-        2,
-        password,
-        -1,
-        nullptr
-    );
+        if (rc)
+        {
+            std::stringstream ss;
+            ss << "error binding " << label;
+            ss << "value: " << value;
+            print_errmsg(rc, ss.str().c_str(), nullptr);
 
-    if (rc)
-    {
-        print_errmsg(rc, "error binding password value ", nullptr);
-
-        sqlite3_finalize(stmt);
-        return false;
-    }
-
-    rc = sqlite3_bind_text(
-        stmt,
-        3,
-        title,
-        -1,
-        nullptr
-    );
-
-    if (rc)
-    {
-        print_errmsg(rc, "error binding title value ", nullptr);
-
-        sqlite3_finalize(stmt);
-        return false;
+            sqlite3_finalize(stmt);
+            return false;
+        }
     }
 
     rc = sqlite3_step(stmt);

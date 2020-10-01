@@ -41,7 +41,7 @@
 [x] bug where if window size < list size, scrolling is weird
 [x] add pagination for list
 [x] extend commandview length
-[ ] change commands when views change
+[x] change commands when views change
 [x] COL_BUFFER should be passed into windows as the starting x cord
 [x] remove #defines in ListView and replace with const
 [ ] make commandview unique_ptr

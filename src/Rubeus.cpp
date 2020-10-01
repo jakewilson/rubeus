@@ -12,8 +12,7 @@ Rubeus::Rubeus()
 {
     m_model->register_list_observer(this);
 
-    m_main_view = make_list_view();
-    m_command_view.set_commands({{106, "move down"}, {107, "move up"}});
+    toggle_list_view();
     m_keep_running = true;
 }
 
@@ -117,12 +116,14 @@ void Rubeus::process_create_view_input(const int c)
 void Rubeus::toggle_list_view()
 {
     m_main_view = make_list_view();
+    m_command_view.set_commands(get_list_view_commands());
     m_view_state = ViewState::list;
 }
 
 void Rubeus::toggle_create_view()
 {
     m_main_view = make_create_view();
+    m_command_view.set_commands(get_create_view_commands());
     m_view_state = ViewState::create;
 }
 
@@ -150,4 +151,22 @@ std::unique_ptr<CreateView> Rubeus::make_create_view()
         COLS - (window_padding * 2),
         COMMAND_VIEW_Y - window_padding
     );
+}
+
+std::vector<RubeusCommand> Rubeus::get_list_view_commands()
+{
+    return {
+        {static_cast<int>('j'), "move down"},
+        {static_cast<int>('k'), "move up"},
+        {static_cast<int>('c'), "create entry"},
+        {escape_key, "quit"},
+    };
+}
+
+std::vector<RubeusCommand> Rubeus::get_create_view_commands()
+{
+    return {
+        {enter_key, "next item/submit"},
+        {escape_key, "back"},
+    };
 }

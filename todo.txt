@@ -46,5 +46,5 @@
 [x] remove #defines in ListView and replace with const
 [ ] make commandview unique_ptr
 [ ] add search
-[ ] look into chgat for ListView::m_selected_entry
-[ ] what is A_STANDOUT?
+[x] look into chgat for ListView::m_selected_entry
+[x] what is A_STANDOUT?

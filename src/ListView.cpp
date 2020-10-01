@@ -58,12 +58,6 @@ void ListView::render_list() const
     for (auto i = m_list_start; i < m_list_end; i++)
     {
         auto y_pos = list_start_line + (i - m_list_start);
-        if (i == m_selected_entry)
-        {
-            render_selected_entry(y_pos);
-            continue;
-        }
-
         render_nth_column(
             user_col,
             y_pos,
@@ -79,6 +73,11 @@ void ListView::render_list() const
             y_pos,
             pad_entry_str(m_entries[i].get_title())
         );
+        if (i == m_selected_entry)
+        {
+            wmove(m_window, y_pos, 0);
+            wchgat(m_window, -1, A_STANDOUT, 0, NULL);
+        }
     }
 }
 
@@ -97,40 +96,6 @@ void ListView::render_nth_column(
 {
     const int col = (col_buffer + m_col_size) * col_number;
     mvwprintw(m_window, line_number, col, str);
-}
-
-void ListView::render_selected_entry(int y_pos) const
-{
-    wattron(m_window, COLOR_PAIR(RUBEUS_BLACK_WHITE));
-    const auto& username = pad_entry_str(m_entries[m_selected_entry].get_username());
-    const auto& password = pad_entry_str(m_entries[m_selected_entry].get_password());
-    const auto& title =  pad_entry_str(m_entries[m_selected_entry].get_title());
-
-    int curs_x = 0;
-    int curs_y = 0;
-
-    render_nth_column(
-        title_col,
-        y_pos,
-        title
-    );
-    getyx(m_window, curs_y, curs_x);
-    render_n_spaces(((m_col_size + col_buffer) * (title_col + 1)) - curs_x + 1);
-    render_nth_column(
-        user_col,
-        y_pos,
-        username
-    );
-    getyx(m_window, curs_y, curs_x);
-    render_n_spaces(((m_col_size + col_buffer) * (user_col + 1)) - curs_x + 1);
-    render_nth_column(
-        pass_col,
-        y_pos,
-        password
-    );
-    getyx(m_window, curs_y, curs_x);
-    render_n_spaces(m_w - curs_x);
-    wattroff(m_window, COLOR_PAIR(RUBEUS_BLACK_WHITE));
 }
 
 void ListView::render_n_spaces(int n) const

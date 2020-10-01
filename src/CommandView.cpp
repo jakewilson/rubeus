@@ -20,9 +20,7 @@ void CommandView::render()
 {
     wclear(m_window);
     mvwprintw(m_window, 0, 0, "%s", m_command_str.c_str());
-    wmove(m_window, 0, 0);
-    // make the whole line green
-    wchgat(m_window, -1, 0, RUBEUS_BLACK_GREEN, NULL);
+    mvwchgat(m_window, 0, 0, -1, 0, RUBEUS_BLACK_GREEN, NULL);
     wrefresh(m_window);
 }
 

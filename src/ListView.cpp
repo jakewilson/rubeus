@@ -7,22 +7,20 @@
 #include <sstream>
 
 ListView::ListView(
-    const std::vector<PasswordEntry> entries,
     int x,
     int y,
     int w,
-    int h
+    int h,
+    const std::vector<PasswordEntry> entries
 ) :
     IView(x, y, w, h),
     m_entries(entries),
     m_col_size(w / num_columns),
     m_num_visible_items(std::min(
         static_cast<int>(entries.size()),
-        h - list_start_line
+        (h - list_view_start_col) - list_start_line
     ))
 {
-    box(m_window, 0, 0);
-
     curs_set(0); // make the cursor invisible
 
     m_list_start = 0;
@@ -48,6 +46,8 @@ void ListView::print_grid() const
 void ListView::render()
 {
     wclear(m_window);
+    box(m_window, 0, 0);
+
     render_list_header();
     render_list();
     wrefresh(m_window);
@@ -75,8 +75,15 @@ void ListView::render_list() const
         );
         if (i == m_selected_entry)
         {
-            wmove(m_window, y_pos, 0);
-            wchgat(m_window, -1, A_STANDOUT, 0, NULL);
+            mvwchgat(
+                m_window,
+                y_pos,
+                list_view_start_col,
+                m_w - (2 * list_view_start_col),
+                A_STANDOUT,
+                0,
+                NULL
+            );
         }
     }
 }
@@ -94,7 +101,7 @@ void ListView::render_nth_column(
     const char * str
 ) const
 {
-    const int col = (col_buffer + m_col_size) * col_number;
+    const int col = (col_buffer + m_col_size) * col_number + list_view_start_col;
     mvwprintw(m_window, line_number, col, str);
 }
 

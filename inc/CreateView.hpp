@@ -5,9 +5,11 @@
 #include <string>
 #include <ncurses.h>
 
-constexpr int title_y = 1;
-constexpr int username_y = 2;
-constexpr int password_y = 3;
+constexpr int title_y = 2;
+constexpr int username_y = 3;
+constexpr int password_y = 4;
+
+constexpr int create_view_start_col = 1;
 
 const std::string title_label {"Title: "};
 const std::string username_label {"Username: "};

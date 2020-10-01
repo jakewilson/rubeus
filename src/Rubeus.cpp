@@ -52,7 +52,7 @@ void Rubeus::process_list_view_input(const int c)
 
     switch (c)
     {
-        case 'q': case 'Q': case escape_key:
+        case 'q': case 'Q':
             // TODO may want to generate an 'action' that
             // does this instead - or may be overkill
             m_keep_running = false;
@@ -135,11 +135,11 @@ void Rubeus::notify(const std::vector<PasswordEntry> entries)
 std::unique_ptr<ListView> Rubeus::make_list_view()
 {
     return std::make_unique<ListView>(
-        m_entries,
         window_padding,
         window_padding,
         COLS - (window_padding * 2),
-        COMMAND_VIEW_Y - window_padding
+        COMMAND_VIEW_Y - window_padding,
+        m_entries
     );
 }
 

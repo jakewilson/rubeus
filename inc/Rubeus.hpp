@@ -17,7 +17,7 @@ constexpr int enter_key     = 10;
 constexpr int escape_key    = 27;
 constexpr int backspace_key = 127;
 
-constexpr int window_padding = 2;
+constexpr int window_padding = 1;
 
 class Rubeus : public IListObserver
 {

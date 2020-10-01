@@ -24,7 +24,6 @@ int main()
 {
     // TODO add arg for private key
     // TODO add arg for file (?)
-    // TODO check for # rows and cols
     init();
 
     Rubeus rubeus{};

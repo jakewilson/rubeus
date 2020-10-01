@@ -18,7 +18,7 @@
 [ ] render footer which shows commands
 [x] fix spaces still being highlighted when switching lines
 [ ] add arrow key support as well as j/k (broken again - I think has to do with timeout? see 34)
-[ ] what happened to the (ListView) border??
+[x] what happened to the (ListView) border??
 [x] create password_entry table on engine init if it doesn't exist
 [x] make password_entry.id AUTO INC
 [ ] make select_password_entries_cb a lambda?
@@ -48,3 +48,5 @@
 [ ] add search
 [x] look into chgat for ListView::m_selected_entry
 [x] what is A_STANDOUT?
+[ ] throw exception in Engine if password failed to insert
+[ ] add delete functionality

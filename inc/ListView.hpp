@@ -8,8 +8,8 @@
 
 class PasswordEntry;
 
-constexpr int list_header_line = 0;
-constexpr int list_start_line = 1;
+constexpr int list_header_line = 1;
+constexpr int list_start_line = 2;
 constexpr int num_columns = 3;
 constexpr int col_buffer = 2;
 
@@ -17,10 +17,12 @@ constexpr int title_col = 0;
 constexpr int user_col = 1;
 constexpr int pass_col = 2;
 
+constexpr int list_view_start_col = 1;
+
 class ListView : public IView
 {
 public:
-    ListView(const std::vector<PasswordEntry> entries, int, int, int, int);
+    ListView(int, int, int, int, const std::vector<PasswordEntry>);
     ~ListView() {}
 
     void render() override;

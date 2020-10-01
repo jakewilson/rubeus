@@ -8,9 +8,6 @@ CreateView::CreateView(int x, int y, int w, int h)
     :IView(x, y, w, h),
      m_focus(Focus::title)
 {
-    box(m_window, 0, 0);
-
-    notimeout(m_window, true);
     curs_set(1); // make the cursor visible
 }
 
@@ -18,23 +15,25 @@ void CreateView::render()
 {
     wclear(m_window);
 
+    box(m_window, 0, 0);
+
     render_header();
     mvwprintw(
         m_window,
         title_y,
-        0,
+        create_view_start_col,
         "%s%s", title_label.c_str(), m_title.c_str()
     );
     mvwprintw(
         m_window,
         username_y,
-        0,
+        create_view_start_col,
         "%s%s", username_label.c_str(), m_username.c_str()
     );
     mvwprintw(
         m_window,
         password_y,
-        0,
+        create_view_start_col,
         "%s%s", password_label.c_str(), m_password.c_str()
     );
 
@@ -67,7 +66,12 @@ void CreateView::render_header() const
 {
     const char *header_str = "Create a new password";
     wattron(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
-    mvwprintw(m_window, 0, (m_w / 2) - strlen(header_str) / 2, header_str);
+    mvwprintw(
+        m_window,
+        create_view_start_col,
+        (m_w / 2) - strlen(header_str) / 2,
+        header_str
+    );
     wattroff(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
 }
 

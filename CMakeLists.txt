@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(rubeus)
 
+set(USR_LOCAL /usr/local)
+
 set(RUBEUS_SOURCE_FILES
     inc/CommandView.hpp src/CommandView.cpp
     inc/CreateView.hpp src/CreateView.cpp
@@ -26,5 +28,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_executable(${PROJECT_NAME} ${RUBEUS_SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ncurses sqlite3)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc)
+target_link_directories(${PROJECT_NAME} PUBLIC ${USR_LOCAL}/lib)
+target_link_libraries(${PROJECT_NAME} PUBLIC ncurses sqlite3 ssl)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc ${USR_LOCAL}/include)

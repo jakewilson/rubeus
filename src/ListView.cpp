@@ -46,7 +46,9 @@ void ListView::print_grid() const
 void ListView::render()
 {
     wclear(m_window);
+    wattron(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
     box(m_window, 0, 0);
+    wattroff(m_window, COLOR_PAIR(RUBEUS_CYAN_BLACK));
 
     render_list_header();
     render_list();
@@ -80,8 +82,8 @@ void ListView::render_list() const
                 y_pos,
                 list_view_start_col,
                 m_w - (2 * list_view_start_col),
-                A_STANDOUT,
                 0,
+                RUBEUS_BLACK_MAGENTA,
                 NULL
             );
         }
@@ -90,9 +92,11 @@ void ListView::render_list() const
 
 void ListView::render_list_header() const
 {
+    wattron(m_window, A_BOLD);
     render_nth_column(title_col, list_header_line, "TITLE");
     render_nth_column(user_col, list_header_line, "USERNAME");
     render_nth_column(pass_col, list_header_line, "PASSWORD");
+    wattroff(m_window, A_BOLD);
 }
 
 void ListView::render_nth_column(

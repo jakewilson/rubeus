@@ -11,7 +11,6 @@ void init()
     cbreak();
     keypad(stdscr, true);
     noecho();
-    refresh(); // not sure why this is needed
     init_colors();
 }
 

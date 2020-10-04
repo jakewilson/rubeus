@@ -8,8 +8,8 @@
 
 class PasswordEntry;
 
-constexpr int list_header_line = 1;
-constexpr int list_start_line = 2;
+constexpr int list_header_line = 0;
+constexpr int list_start_line = 1;
 constexpr int num_columns = 3;
 constexpr int col_buffer = 2;
 

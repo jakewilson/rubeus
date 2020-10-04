@@ -50,3 +50,7 @@
 [x] what is A_STANDOUT?
 [ ] throw exception in Engine if password failed to insert
 [ ] add delete functionality
+[ ] limit length of title and username
+[ ] deal with overflowing passwords better
+[ ] change how commands are displayed
+[x] add ssl to the project

@@ -20,5 +20,4 @@ void init_colors()
     init_pair(RUBEUS_BLACK_BLUE, COLOR_BLACK,  COLOR_BLUE);
 
     init_pair(RUBEUS_BLACK_WHITE, COLOR_BLACK, COLOR_WHITE);
-
 }

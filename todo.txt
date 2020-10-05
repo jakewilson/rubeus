@@ -54,3 +54,8 @@
 [ ] deal with overflowing passwords better
 [ ] change how commands are displayed
 [x] add ssl to the project
+[ ] screen is flickering - maybe rendering too much each render
+[x] might not need libssl, only libcrypto
+[x] add scrypt-kdf
+[ ] fine-tune scrypt params if need be
+[ ] only need to type password twice if it's the first time opening rubeus (check if db exists?)

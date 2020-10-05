@@ -59,3 +59,6 @@
 [x] add scrypt-kdf
 [ ] fine-tune scrypt params if need be
 [ ] only need to type password twice if it's the first time opening rubeus (check if db exists?)
+[x] derive key from password
+[ ] encrypt PasswordEntries using key
+[ ] add iv to beginning of hash strings, to be used later for decryption

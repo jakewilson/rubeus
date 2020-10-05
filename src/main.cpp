@@ -63,7 +63,8 @@ int main(int argc, char *argv[])
 {
     auto password = get_password();
 
-    char key[crypto::output_len];
+    char key[crypto::key_len];
+    std::cout << "hashing..." << std::flush;
     auto rc = crypto::derive_key(password, key);
 
     if (rc)
@@ -71,13 +72,30 @@ int main(int argc, char *argv[])
         std::cout << "error deriving key: " << rc << std::endl;
         return rc;
     }
-
-/*
-    for (auto i = 0; i < crypto::output_len; i++) {
-        if (i % 8 == 0) printf("\n");
-        printf("0x%02x ", static_cast<uint8_t>(key[i]));
+    else
+    {
+        std::cout << "done" << std::endl;
     }
-    printf("\n");
+
+/* TODO - use this when storing/retrieving passwords
+    unsigned char ciphertext[256] = {0};
+    try
+    {
+        crypto::encrypt_str((const unsigned char *)key, "my name is jake", ciphertext);
+        for (auto i = 0; i < 256; i++) {
+            if (i % 16 == 0) printf("\n");
+            printf("0x%02x ", static_cast<uint8_t>(ciphertext[i]));
+        }
+        printf("\n\n");
+        std::string cipher ((char *)ciphertext);
+        unsigned char plaintext[256] = {0};
+        crypto::decrypt_str((const unsigned char *)key, cipher, plaintext);
+        printf("%s\n", plaintext);
+    }
+    catch (crypto::encrypt_exception &e)
+    {
+        std::cout << e.what() << std::endl;
+    }
 */
 
 

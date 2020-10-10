@@ -68,7 +68,7 @@ void ListView::render_list() const
         render_nth_column(
             pass_col,
             y_pos,
-            pad_entry_str(m_entries[i].get_password())
+            pad_entry_str("********")
         );
         render_nth_column(
             title_col,

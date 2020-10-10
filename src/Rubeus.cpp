@@ -1,22 +1,29 @@
 #include "colors.hpp"
+#include "crypto.hpp"
 #include "Logger.hpp"
 #include "Model.hpp"
 #include "Rubeus.hpp"
 
 #include <ncurses.h>
+#include <string.h>
 
-Rubeus::Rubeus()
+Rubeus::Rubeus(const char key[])
     :
     m_model(std::make_unique<Model>()),
     m_command_view(window_padding, COMMAND_VIEW_Y, COLS - (window_padding * 2), 1)
 {
+    strncpy(m_key, key, crypto::key_len);
     m_model->register_list_observer(this);
 
     toggle_list_view();
     m_keep_running = true;
 }
 
-Rubeus::~Rubeus() {}
+Rubeus::~Rubeus()
+{
+    // zero out key
+    memset(m_key, 0, crypto::key_len);
+}
 
 void Rubeus::run()
 {
@@ -34,13 +41,13 @@ void Rubeus::process_input(const int c)
 {
     switch (m_view_state)
     {
-        case ViewState::list:
-            process_list_view_input(c);
-            break;
+    case ViewState::list:
+        process_list_view_input(c);
+        break;
 
-        case ViewState::create:
-            process_create_view_input(c);
-            break;
+    case ViewState::create:
+        process_create_view_input(c);
+        break;
     }
 }
 
@@ -52,23 +59,23 @@ void Rubeus::process_list_view_input(const int c)
 
     switch (c)
     {
-        case 'q': case 'Q':
-            // TODO may want to generate an 'action' that
-            // does this instead - or may be overkill
-            m_keep_running = false;
-            break;
+    case 'q': case 'Q':
+        // TODO may want to generate an 'action' that
+        // does this instead - or may be overkill
+        m_keep_running = false;
+        break;
 
-        case 'j': case 'J': case KEY_DOWN:
-            list_view->selected_entry_down();
-            break;
+    case 'j': case 'J': case KEY_DOWN:
+        list_view->selected_entry_down();
+        break;
 
-        case 'k': case 'K': case KEY_UP:
-            list_view->selected_entry_up();
-            break;
+    case 'k': case 'K': case KEY_UP:
+        list_view->selected_entry_up();
+        break;
 
-        case 'c': case 'C':
-            toggle_create_view();
-            break;
+    case 'c': case 'C':
+        toggle_create_view();
+        break;
     }
 }
 
@@ -80,36 +87,44 @@ void Rubeus::process_create_view_input(const int c)
 
     switch (c)
     {
-        case escape_key:
+    case escape_key:
+        toggle_list_view();
+        break;
+
+    case backspace_key: case KEY_BACKSPACE: case '\b':
+        create_view->remove_char();
+        break;
+
+    case KEY_ENTER: case '\n': case '\r':
+        if (create_view->get_focus() == Focus::password)
+        {
+            // TODO change size from 256
+            unsigned char ciphertext[256] = {0};
+            crypto::encrypt_str(
+                (const unsigned char *)m_key,
+                create_view->get_password(),
+                ciphertext
+            );
+
+            m_model->add_password_entry(
+                create_view->get_username().c_str(),
+                (const char *)ciphertext,
+                create_view->get_title().c_str()
+            );
             toggle_list_view();
-            break;
+        }
+        else
+        {
+            create_view->next_focus();
+        }
+        break;
 
-        case backspace_key: case KEY_BACKSPACE: case '\b':
-            create_view->remove_char();
-            break;
-
-        case KEY_ENTER: case '\n': case '\r':
-            if (create_view->get_focus() == Focus::password)
-            {
-                m_model->add_password_entry(
-                    create_view->get_username().c_str(),
-                    create_view->get_password().c_str(),
-                    create_view->get_title().c_str()
-                );
-                toggle_list_view();
-            }
-            else
-            {
-                create_view->next_focus();
-            }
-            break;
-
-        default:
-            if (c >= 32 && c <= 126)
-            {
-                create_view->add_char(static_cast<char>(c));
-            }
-            break;
+    default:
+        if (c >= 32 && c <= 126)
+        {
+            create_view->add_char(static_cast<char>(c));
+        }
+        break;
     }
 }
 

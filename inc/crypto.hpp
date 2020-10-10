@@ -6,6 +6,7 @@
 namespace crypto
 {
     constexpr int key_len = 32;
+    constexpr int block_size = 16;
 
     int derive_key(std::string, char *);
     void encrypt_str(const unsigned char *, std::string, unsigned char *);

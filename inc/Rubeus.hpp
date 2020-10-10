@@ -22,7 +22,7 @@ constexpr int window_padding = 1;
 class Rubeus : public IListObserver
 {
 public:
-    Rubeus();
+    Rubeus(const char[]);
     ~Rubeus();
 
     enum class ViewState
@@ -58,4 +58,6 @@ private:
 
     std::vector<RubeusCommand> get_list_view_commands();
     std::vector<RubeusCommand> get_create_view_commands();
+
+    char *m_key;
 };

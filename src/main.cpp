@@ -98,13 +98,14 @@ int main(int argc, char *argv[])
     }
 */
 
-
     // TODO add arg for file (?)
     init();
 
-    Rubeus rubeus{};
+    Rubeus rubeus {key};
     rubeus.run();
 
+    // zero out key
+    memset(key, 0, crypto::key_len);
     kill();
     return 0;
 }

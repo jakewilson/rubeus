@@ -5,7 +5,7 @@
 [x] render rows from model in listview
 [x] selected row should be inverse fg/bg colors or something more subtle
 [x] add create row view for creating a new entry
-[ ] add encryption with a private key or password
+[x] add encryption with a private key or password
 [ ] add sorting for columns
 [x] add CMake
 [ ] add command line args
@@ -57,8 +57,11 @@
 [ ] screen is flickering - maybe rendering too much each render
 [x] might not need libssl, only libcrypto
 [x] add scrypt-kdf
-[ ] fine-tune scrypt params if need be
+[x] fine-tune scrypt params if need be
 [ ] only need to type password twice if it's the first time opening rubeus (check if db exists?)
 [x] derive key from password
-[ ] encrypt PasswordEntries using key
+[x] encrypt PasswordEntries using key
 [ ] add iv to beginning of hash strings, to be used later for decryption
+[ ] do I need message authentication if the db is password protected? probably doesn't hurt
+[ ] zero out key and password entries before deleting them
+[x] render password as stars
